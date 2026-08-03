@@ -90,7 +90,6 @@ export default function ReservationModal({
     if (!form.fullName.trim()) return setErr("Full name is required.");
     if (!isEmail(form.email)) return setErr("Enter a valid email.");
     if (!isPhone(form.phone)) return setErr("Enter a valid phone number.");
-
     setLoading(true);
     try {
       await onSubmit({
@@ -110,7 +109,6 @@ export default function ReservationModal({
   };
 
   if (!open) return null;
-
   return (
     <div className="rmOverlay" role="dialog" aria-modal="true">
       <div className="rmModal">
@@ -136,13 +134,11 @@ export default function ReservationModal({
               </option>
             ))}
           </select>
-
           <div className="rmRow2">
             <div>
               <label className="rmLabel">Start</label>
               <input className="rmInput" value={startText} readOnly />
             </div>
-
             <div>
               <label className="rmLabel">Length *</label>
               <select
@@ -163,7 +159,6 @@ export default function ReservationModal({
               </div>
             </div>
           </div>
-
           <div className="rmRow1">
             <label className="rmLabel">End (auto)</label>
             <input className="rmInput" value={endText} readOnly />
@@ -176,7 +171,6 @@ export default function ReservationModal({
             onChange={(e) => setForm((s) => ({ ...s, fullName: e.target.value }))}
             placeholder="Your name"
           />
-
           <div className="rmRow2">
             <div>
               <label className="rmLabel">Email *</label>
@@ -197,7 +191,6 @@ export default function ReservationModal({
               />
             </div>
           </div>
-
           <label className="rmLabel">Coupon code (optional)</label>
           <input
             className="rmInput"
@@ -205,9 +198,7 @@ export default function ReservationModal({
             onChange={(e) => setForm((s) => ({ ...s, coupon: e.target.value }))}
             placeholder="COUPON2026"
           />
-
           {err && <div className="rmErr">{err}</div>}
-
           <div className="rmActions">
             <button className="rmBtn ghost" onClick={onClose} disabled={loading}>
               Cancel

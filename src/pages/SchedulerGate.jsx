@@ -24,6 +24,10 @@ export default function SchedulerGate() {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
   const [busyRacks, setBusyRacks] = useState([]);
+  const [systemNotices, setSystemNotices] = useState([]);
+  const [accessDenied, setAccessDenied] = useState(false);
+  const [accessMessage, setAccessMessage] = useState("");
+  const [checkingAccess, setCheckingAccess] = useState(true);  
 
   const courseMeta = useMemo(() => {
     const s = (slug || "").toLowerCase();
@@ -53,26 +57,46 @@ export default function SchedulerGate() {
   }, []);
 
   useEffect(() => {
-    if (!courseMeta) return;
-    (async () => {
-      try {
-        // ✅ FIX: NO "/api" here
-        const res = await api.get("/scheduler/busy", {
-          params: {
-            vendor: courseMeta.vendor,
-            course: courseMeta.slug,
-            start: busyWindow.start.toISOString(),
-            end: busyWindow.end.toISOString(),
-            tzOffsetMinutes: new Date().getTimezoneOffset(),
-          },
-        });
-        const racks = res.data?.busyRacks || res.data?.racks || res.data?.busy || [];
-        setBusyRacks(Array.isArray(racks) ? racks : []);
-      } catch {
-        setBusyRacks([]);
-      }
-    })();
-  }, [courseMeta, busyWindow]);
+  if (!courseMeta) return;
+
+  (async () => {
+    try {
+      const res = await api.get("/scheduler/busy", {
+        params: {
+          vendor: courseMeta.vendor,
+          course: courseMeta.slug,
+          start: busyWindow.start.toISOString(),
+          end: busyWindow.end.toISOString(),
+          tzOffsetMinutes: new Date().getTimezoneOffset(),
+        },
+      });
+
+      const racks = res.data?.busyRacks || [];
+      setBusyRacks(Array.isArray(racks) ? racks : []);
+
+     const noticeRes = await api.get("/operations/active", {
+  params: {
+    course: courseMeta.slug,
+  },
+});
+
+      console.log("Course:", courseMeta.slug);
+      console.log("Notice API Response:", noticeRes.data);
+
+      setSystemNotices(noticeRes.data.data || []);
+
+      console.log("System Notices:", noticeRes.data.data);
+
+    } catch (err) {
+      console.error(err);
+
+      setBusyRacks([]);
+      setSystemNotices([]);
+    }
+  })();
+}, [courseMeta, busyWindow]);
+
+
 
   const submit = async (e) => {
     e.preventDefault();
@@ -105,9 +129,11 @@ export default function SchedulerGate() {
 
       if (res.data?.token) localStorage.setItem("token", res.data.token);
       if (res.data?.user) localStorage.setItem("user", JSON.stringify(res.data.user));
-
       navigate(`/${slug}/calendar`, { replace: true });
-    } catch (ex) {
+      } 
+    
+      
+    catch (ex) {
       const code = ex?.response?.data?.code;
       if (code === "ACCOUNT_NOT_APPROVED") {
         navigate(`/account-pending?from=${encodeURIComponent(slug || "")}`, { replace: true });
@@ -137,6 +163,53 @@ export default function SchedulerGate() {
   const busyMsg = formatRackMessage(busyRacks);
   return (
     <div className="sgPage">
+
+       {systemNotices.length > 0 && (
+  <div className="sgNoticeWrapper">
+    {systemNotices.map((notice) => (
+      <div
+        key={notice.id}
+        className={`sgNoticeCard ${
+          notice.severity === "CRITICAL"
+            ? "critical"
+            : notice.severity === "WARNING"
+            ? "warning"
+            : "info"
+        }`}
+      >
+        <div className="sgNoticeIcon">
+          {notice.severity === "CRITICAL"
+            ? "🚨"
+            : notice.scope === "RACK"
+            ? "🚧"
+            : notice.severity === "WARNING"
+            ? "⚠️"
+            : "ℹ️"}
+        </div>
+
+        <div className="sgNoticeContent">
+          <h3>{notice.title}</h3>
+
+          <p>{notice.message}</p>
+
+          {notice.scope === "RACK" && (
+            <small>
+              <strong>Rack {notice.rack}</strong> is currently unavailable.
+            </small>
+          )}
+
+          {notice.startTime && (
+            <small>
+              {new Date(notice.startTime).toLocaleString()}
+              {notice.endTime &&
+                ` - ${new Date(notice.endTime).toLocaleString()}`}
+            </small>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+)}
       {!!busyMsg && (
         <div className="sgBusyBanner">
           <span className="sgNoIcon">🚫</span>

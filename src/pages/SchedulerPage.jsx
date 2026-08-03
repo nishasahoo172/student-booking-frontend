@@ -6,7 +6,9 @@ import ReservationModal from "../components/ReservationModal";
 import MiniMonth from "../components/MiniMonth";
 import "../styles/schedulerCalendar.css";
 import { createBooking } from "../services/bookingApi";
- 
+ import UpcomingBookingCard from "../components/UpcomingBookingCard";
+ import "../styles/schedulerPage.css";
+
  
 // show + at every hour
 const SLOT_STEP_HOURS = 1;
@@ -45,15 +47,38 @@ function labelHour(h) {
   if (h < 12) return `${h}am`;
   return `${h - 12}pm`;
 }
-// SAFE parser for MySQL DATETIME ("YYYY-MM-DD HH:MM:SS")
+
 function parseMySQLDateTime(val) {
   if (!val) return null;
-  // If backend ever returns ISO already, Date() can parse it.
-  if (String(val).includes("T")) return new Date(val);
- 
-  // Convert "YYYY-MM-DD HH:MM:SS" => "YYYY-MM-DDTHH:MM:SS"
-  return new Date(String(val).replace(" ", "T"));
+
+  if (String(val).includes("T")) {
+    return new Date(val);
+  }
+
+  return new Date(
+    String(val).replace(" ", "T")
+  );
 }
+// SAFE parser for MySQL DATETIME ("YYYY-MM-DD HH:MM:SS")
+// function parseMySQLDateTime(val) {
+//   if (!val) return null;
+//   if (String(val).includes("T")) return new Date(val);
+//   return new Date(String(val).replace(" ", "T"));
+// }
+
+// function parseMySQLDateTime(val) {
+//   if (!val) return null;
+
+//   if (String(val).includes("T")) {
+//     return new Date(val);
+//   }
+
+//   return new Date(
+//     String(val).replace(" ", "T") 
+//   );
+// }
+
+
 // Format date range labels using parsed dates
 function formatRangeLabel(startVal, endVal) {
   const s = parseMySQLDateTime(startVal);
@@ -141,13 +166,19 @@ export default function SchedulerPage() {
   }, []);
  
   // ✅ selected rack (future-ready)
-  const [selectedRack, setSelectedRack] = useState("1");
- 
-  const [focusDate, setFocusDate] = useState(() => new Date());
-  const [view, setView] = useState("week"); // week | day
- 
-  const [busyEvents, setBusyEvents] = useState([]);
+const [selectedRack, setSelectedRack] = useState("1");
+const [availableRacks, setAvailableRacks] = useState(["1"]);
+
+const [focusDate, setFocusDate] = useState(() => new Date());
+const [view, setView] = useState("week");
+
+const [busyEvents, setBusyEvents] = useState([]);
+
+const [upcomingBooking, setUpcomingBooking] = useState(null);
+const [loadingUpcoming, setLoadingUpcoming] = useState(true);
+
 const events = useMemo(() => {
+   console.log("CALENDAR EVENTS:", normalizeEvents(busyEvents));
   const now = new Date();
  
   return normalizeEvents(busyEvents).filter((ev) => {
@@ -162,6 +193,7 @@ const events = useMemo(() => {
   const [modalOpen, setModalOpen] = useState(false);
   const [slotStart, setSlotStart] = useState(null);
  const [uiError, setUiError] = useState("");
+ const [accessDenied, setAccessDenied] = useState(null);
  
   const weekStart = useMemo(() => startOfWeek(focusDate), [focusDate]);
  
@@ -173,46 +205,142 @@ const events = useMemo(() => {
   const hours = useMemo(() => Array.from({ length: 24 }, (_, i) => i), []);
  
   // ✅ load busy with rack filter
-  const loadBusy = useCallback(async () => {
-    if (!courseMeta) return;
- 
-    const start = new Date(view === "day" ? focusDate : weekStart);
-    const end = view === "day" ? addDays(focusDate, 1) : addDays(weekStart, 7);
- 
+ const loadBusy = useCallback(async () => {
+  if (!courseMeta) return;
+
+  const start = new Date(view === "day" ? focusDate : weekStart);
+  const end = view === "day" ? addDays(focusDate, 1) : addDays(weekStart, 7);
+
+  try {
+
+    const res = await api.get("/scheduler/busy", {
+      params: {
+        vendor: courseMeta.vendor,
+        course: courseMeta.slug,
+        rack: selectedRack,
+        start: start.toLocaleString("sv-SE").replace(" ", "T"),
+        end: end.toLocaleString("sv-SE").replace(" ", "T"),
+      },
+    });
+
+    const raw =
+      res.data?.events ||
+      res.data?.busy ||
+      res.data?.busyEvents ||
+      [];
+
+    setBusyEvents(raw);
+
+    setAvailableRacks(
+      (res.data?.racks || ["1"]).map(String)
+    );
+
+  } catch (e) {
+
+    console.error("[busy:load] failed", e);
+
+    if (
+      e?.response?.status === 403 &&
+      e?.response?.data?.code === "COURSE_ACCESS_DENIED"
+    ) {
+
+      setAccessDenied({
+        title: e.response.data.title,
+        message: e.response.data.message,
+        description: e.response.data.description,
+      });
+
+      return;
+    }
+
+    setBusyEvents([]);
+  }
+
+}, [courseMeta, weekStart, focusDate, view, selectedRack]);
+
+
+  const loadUpcomingBooking = useCallback(async () => {
+  try {
+const { data } = await api.get("/bookings/upcoming", {
+  params: {
+    vendor: courseMeta.vendor,
+    course: courseMeta.slug,
+  },
+});
+
+    console.log("Upcoming Booking:", data);
+
+    setUpcomingBooking(data);
+  } catch (err) {
+    console.error("[upcomingBooking]", err);
+  } finally {
+    setLoadingUpcoming(false);
+  }
+}, [courseMeta]);
+
+useEffect(() => {
+
+  if (!courseMeta) return;
+
+  const initializeScheduler = async () => {
+
     try {
-      const res = await api.get("/scheduler/busy", {
+
+      // Step 1: Verify course access
+      await api.get("/scheduler/access", {
         params: {
           vendor: courseMeta.vendor,
           course: courseMeta.slug,
-          rack: selectedRack,
-          // You can send ISO ranges; backend must convert to DATETIME for SQL
-          start: start.toISOString(),
-          end: end.toISOString(),
         },
       });
- 
-      const raw = res.data?.events || res.data?.busy || res.data?.busyEvents || [];
-      setBusyEvents(raw);
+
+      // Step 2: Access granted → load calendar
+setAccessDenied(null);
+
+await loadBusy();
+
+await loadUpcomingBooking();
+
     } catch (e) {
-      console.error("[busy:load] failed", e);
-      setBusyEvents([]);
+
+      if (
+        e?.response?.status === 403 &&
+        e?.response?.data?.code === "COURSE_ACCESS_DENIED"
+      ) {
+
+        setAccessDenied({
+          title: e.response.data.title,
+          message: e.response.data.message,
+          description: e.response.data.description,
+        });
+
+        return;
+      }
+
+      console.error("[scheduler:init]", e);
+
     }
-  }, [courseMeta, weekStart, focusDate, view, selectedRack]);
- 
-  useEffect(() => {
-    loadBusy();
-  }, [loadBusy]);
- 
+
+  };
+
+  initializeScheduler();
+
+}, [courseMeta, loadBusy, loadUpcomingBooking]);
+
   if (!courseMeta) {
     return (
       <div className="scPage">
         <div className="scHeader">
+          
           <h1 className="scTitle">Course not found</h1>
           <div className="scCrumb">{location.pathname}</div>
         </div>
       </div>
     );
   }
+
+
+  
  
 const clickCell = (day, hour) => {
   const key = `${ymd(day)}|${hour}`;
@@ -232,7 +360,6 @@ const clickCell = (day, hour) => {
   setModalOpen(true);
 };
  
- 
   // const submitReservation = async ({ rack, fullName, email, phone, coupon, lengthMinutes }) => {
   //   if (!slotStart) throw new Error("Slot start missing.");
  
@@ -248,7 +375,6 @@ const clickCell = (day, hour) => {
     //   coupon,
     // };
  
- 
  const submitReservation = async ({ rack, phone, lengthMinutes }) => {
   if (!slotStart) {
     throw new Error("Slot start missing.");
@@ -258,17 +384,17 @@ const clickCell = (day, hour) => {
   vendor: courseMeta.vendor,          // ✅ REQUIRED
   course: courseMeta.slug,            // ✅ REQUIRED
   rack: String(rack || selectedRack), // ✅ REQUIRED
-  startISO: slotStart.toISOString(),  // ✅ REQUIRED
+  // startISO: slotStart.toISOString(),  // ✅ REQUIRED
+  startISO: slotStart.toLocaleString("sv-SE").replace(" ", "T"),
+  // startISO: slotStart.toISOString(),
   lengthMinutes: Number(lengthMinutes) // ✅ REQUIRED
 };
- 
  
   const data = await createBooking(payload);
   await loadBusy();
   setModalOpen(false);
   return data;
 };
- 
  
   // ✅ group events by day using parseMySQLDateTime
   const eventsByDay = useMemo(() => {
@@ -294,34 +420,43 @@ const clickCell = (day, hour) => {
     [days.length]
   );
  
-  return (
+    return (
     <div className="scPage">
       <div className="scHeader">
         <h1 className="scTitle">Scheduler</h1>
-       <div className="rackGuideTitleWrap">
-    <h2 className="rackGuideTitle">
-    Rack Access Guide
-     </h2>
+        <div className="rackGuideTitleWrap">
+        <h2 className="rackGuideTitle">
+       Rack Access Guide
+       </h2>
 
-  {/* <p className="rackGuideSub">
-    Reserve your CCIE Data Center rack access slot easily and get instant lab scheduling support.
-  </p> */}
-
-  <a
-    href="YOUR_DRIVE_LINK_HERE"
+          {/* <p className="rackGuideSub">
+           Reserve your CCIE Data Center rack access slot easily and get instant lab scheduling support.
+          </p> */}
+  
+     <a
+     href="YOUR_DRIVE_LINK_HERE"
     target="_blank"
     rel="noreferrer"
     className="rackGuideLink"
-  >
+     >
     View Rack Access Instructions →
-  </a>
-</div>
-        <div className="scCrumb">{courseMeta.title} / Calendar</div>
+    </a>
+     </div>
+      <div className="scCrumb">{courseMeta.title} / Calendar</div>
       </div>
- 
       <div className="scShell">
-
         <div className="scCard">
+
+          {!loadingUpcoming && (
+          <UpcomingBookingCard
+          booking={upcomingBooking}
+           onSuccess={async () => {
+            await loadUpcomingBooking();
+               await loadBusy();
+           }}
+           />
+           )}
+
           <div className="scToolbar">
             <div className="scLeftTools">
               <button
@@ -340,7 +475,6 @@ const clickCell = (day, hour) => {
                 today
               </button>
             </div>
- 
             <div className="scRange">
               {view === "day"
                 ? focusDate.toLocaleDateString(undefined, {
@@ -350,7 +484,22 @@ const clickCell = (day, hour) => {
                   })
                 : fmtRange(weekStart)}
             </div>
- 
+
+          <div className="scRackSelector">
+              <label>Rack:</label>
+
+               <select
+        value={selectedRack}
+        onChange={(e) => setSelectedRack(e.target.value)}
+        >
+        {availableRacks.map((rack) => (
+         <option key={rack} value={rack}>
+            Rack {rack}
+        </option>
+        ))}
+        </select>
+      </div>
+
             <div className="scViewToggle">
               <button className={view === "week" ? "active" : ""} onClick={() => setView("week")}>
                 week
@@ -360,7 +509,6 @@ const clickCell = (day, hour) => {
               </button>
             </div>
           </div>
- 
           <div className="scGridWrap">
             <div className="scGrid" style={{ gridTemplateColumns: gridCols }}>
               <div className="scHeadCell" />
@@ -369,7 +517,6 @@ const clickCell = (day, hour) => {
                   {d.toLocaleDateString(undefined, { weekday: "short", month: "numeric", day: "numeric" })}
                 </div>
               ))}
- 
               {hours.map((h) => (
                 <div key={h} style={{ display: "contents" }}>
                   <div className="scTimeCell">{labelHour(h)}</div>
@@ -448,7 +595,8 @@ const clickCell = (day, hour) => {
   startDate={slotStart}
   onSubmit={submitReservation}
   initialUser={user}
-  allowedRacks={[selectedRack]}
+  // allowedRacks={[selectedRack]}
+  allowedRacks={availableRacks}
 />
  
 </div>

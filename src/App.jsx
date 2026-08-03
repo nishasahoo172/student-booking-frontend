@@ -16,6 +16,7 @@ import RegisterPage from "./pages/RegisterPage";
 
 import SchedulerGate from "./pages/SchedulerGate";
 import SchedulerPage from "./pages/SchedulerPage";
+import SchedulerAccessGuard from "./components/SchedulerAccessGuard";
 import Placeholder from "./pages/Placeholder";
 
 // ADMIN
@@ -27,6 +28,7 @@ import PurchaseHistory from "./pages/PurchaseHistory";
 import CreditHistory from "./pages/CreditHistory";
 import BuyCredits from "./pages/BuyCredits";
 import Reports from "./pages/admin/Reports";
+import SystemNotices from "./pages/admin/SystemNotices";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export default function App() {
@@ -64,10 +66,11 @@ export default function App() {
         <Route path="users" element={<AdminUsers />} />
         <Route path="bookings" element={<AdminBookings />} />
         <Route path="reports" element={<Reports />} />
+          <Route path="system-notices" element={<SystemNotices />} />
       </Route>
 
       {/* ================= DYNAMIC ================= */}
-      <Route path="/:slug/calendar" element={<SchedulerPage />} />
+      <Route path="/:slug/calendar" element={<SchedulerAccessGuard><SchedulerPage /></SchedulerAccessGuard>} />
       <Route path="/:slug" element={<SchedulerGate />} />
       <Route path="/purchase-history" element={<PurchaseHistory />} />
       <Route path="/credits" element={<CreditHistory />} />
@@ -75,6 +78,7 @@ export default function App() {
 
       {/* ================= FALLBACK ================= */}
       <Route path="*" element={<Placeholder />} />
+      
 
     </Routes>
 

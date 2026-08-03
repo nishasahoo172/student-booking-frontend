@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../services/api";
 import "../styles/schedulerGate.css";
 import { COUNTRY_LIST, TIMEZONES } from "../data/geo";
+import { COURSES } from "../data/courses";
 
 function isValidEmail(v = "") {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
@@ -33,6 +34,7 @@ export default function Register() {
   });
 
   const [confirm, setConfirm] = useState("");
+  const [selectedCourses, setSelectedCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
   const [ok, setOk] = useState("");
@@ -57,19 +59,23 @@ export default function Register() {
     if (form.password !== confirm) return setErr("Passwords do not match.");
     if (!form.country) return setErr("Please select a country.");
     if (!form.timeZone) return setErr("Please select a time zone.");
-
+  if(selectedCourses.length===0)
+   {
+     return setErr("Please select at least one course.");
+    }
     setLoading(true);
     try {
-      // ✅ IMPORTANT: baseURL already has /api, so DO NOT write /api here
+      // ✅ IMPORTANT: 
       await api.post("/auth/register", {
-        loginName, // optional if backend stores it
+        loginName, 
         fullName: form.fullName.trim(),
         email,
         password: form.password,
         phone: form.phone.trim(),
         address: form.address.trim(),
         country: form.country,
-        timezone: form.timeZone, // ✅ use timezone key (backend usually expects this)
+        timezone: form.timeZone, 
+        courses:selectedCourses,// ✅ use timezone key (backend usually expects this)
       });
 
       setOk("Account created. Waiting for admin approval…");
@@ -162,7 +168,56 @@ export default function Register() {
               rows={3}
               placeholder="Street, City, State"
             />
+           
+             <label className="sgLabel">
+            Interested Courses *
+           </label>
 
+           <div>
+
+     {COURSES.map((course)=>(
+  
+    <div key={course.slug}>
+
+     <label>
+
+     <input
+     type="checkbox"
+     value={course.slug}
+     checked={selectedCourses.includes(course.slug)}
+     onChange={(e)=>{
+
+    if(e.target.checked){
+
+     setSelectedCourses([
+       ...selectedCourses,
+    course.slug
+       ]);
+
+     }
+    else{
+
+    setSelectedCourses(
+   selectedCourses.filter(
+   (x)=>x!==course.slug
+   )
+   );
+
+   }
+
+    }}
+   />
+
+    {" "}
+ {course.title}
+
+   </label>
+
+   </div>
+
+    ))}
+
+     </div>
             <label className="sgLabel">Country *</label>
             <select className="sgInput" value={form.country} onChange={set("country")} required>
               <option value="">Select country</option>

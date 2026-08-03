@@ -14,6 +14,7 @@ export default function Bookings() {
     try {
       setLoading(true);
       const res = await getBookings();
+          console.log(res.data);
       setRows(res.data);
     } catch (error) {
       console.error("Error loading bookings:", error);
@@ -32,6 +33,18 @@ export default function Bookings() {
       minute: '2-digit'
     });
   };
+
+//   const formatDateTime = (dateTime) => {
+//   return new Date(dateTime).toLocaleString("en-IN", {
+//     timeZone: "Asia/Kolkata",
+//     day: "numeric",
+//     month: "short",
+//     year: "numeric",
+//     hour: "numeric",
+//     minute: "2-digit",
+//     hour12: true,
+//   });
+// };
 
   return (
     <div className="bookings-container">
@@ -55,6 +68,7 @@ export default function Bookings() {
               <tr>
                 <th>User</th>
                 <th>Course</th>
+                 <th>Rack</th>
                 <th>Start</th>
                 <th>End</th>
                 <th>Status</th>
@@ -81,6 +95,11 @@ export default function Bookings() {
                     <td data-label="Course">
                       <span className="course-badge">{b.course}</span>
                     </td>
+                    <td data-label="Rack">
+                   <span className="rack-badge">
+                   Rack {b.rack}
+                   </span>
+                   </td>
                     <td data-label="Start">
                       <div className="datetime-cell">
                         <span className="datetime-icon">📅</span>

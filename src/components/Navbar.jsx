@@ -136,7 +136,6 @@ export default function Navbar() {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-
     window.location.href = "/";
   };
 
@@ -146,14 +145,12 @@ export default function Navbar() {
   useEffect(() => {
     const onDown = (e) => {
       if (!navRef.current) return;
-
       if (!navRef.current.contains(e.target)) {
         closeAll();
       }
     };
 
     document.addEventListener("mousedown", onDown);
-
     return () => {
       document.removeEventListener("mousedown", onDown);
     };
@@ -165,9 +162,7 @@ export default function Navbar() {
     if (!isDesktop()) return;
 
     setOpenTop(name);
-
     const first = Object.keys(menu[name] ?? {})[0] || null;
-
     setCol2(first);
     setCol3(null);
   };
@@ -424,7 +419,6 @@ export default function Navbar() {
                     }}
                   >
                     <span>{top}</span>
-
                     <span className="accIcon">
                       {mTop === top ? "–" : "+"}
                     </span>
@@ -603,7 +597,6 @@ export default function Navbar() {
           >
           My Credits
          </NavLink>
-
        <button
        type="button"
       className="loginBtn"
@@ -622,7 +615,6 @@ export default function Navbar() {
       >
         Admin Panel
        </NavLink>
-
        <button
         type="button"
          className="loginBtn"

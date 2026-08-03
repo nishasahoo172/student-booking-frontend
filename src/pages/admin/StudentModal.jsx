@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/StudentModal.css";
 import { toast } from "react-toastify";
 
 import {
-  addCredits,
-  rejectStudent,
-  updateStudent,
-  reactivateStudent,
+ addCredits,
+ rejectStudent,
+ updateStudent,
+ reactivateStudent,
+ getStudentCourses,
+ approveStudentCourse,
+ assignStudentCourses,
+ removeStudentCourse,
 } from "../../services/studentApi";
+
 
 export default function StudentModal({
   student,
@@ -38,15 +43,160 @@ const [rejectReason, setRejectReason] =
 const [rejectLoading, setRejectLoading] =
   useState(false);
 
-  if (!student) return null;
-  
-  const [editData, setEditData] = useState({
+
+
+const [studentCourses, setStudentCourses] =
+useState([]);
+
+const [assignedCourses,setAssignedCourses] = useState([]);
+
+const [editData, setEditData] = useState({
+  fullName: "",
+  phone: "",
+  country: "",
+  address: "",
+  status: "active",
+});
+
+// useEffect(() => {
+
+//   if (!student) return;
+
+//   new
+useEffect(() => {
+
+  if (!student) return;
+
+  setEditData({
     fullName: student.fullName || "",
     phone: student.phone || "",
     country: student.country || "",
     address: student.address || "",
     status: student.status || "active",
   });
+
+}, [student]);
+
+useEffect(() => {
+
+  if (!student?.id) return;
+
+  loadCourses();
+
+}, [student?.id]);
+
+const loadCourses = async () => {
+
+  try {
+
+    const res = await getStudentCourses(student.id);
+
+    setStudentCourses(
+      res.data
+    );
+
+  } catch (err) {
+
+    console.error("Failed loading courses:", err);
+
+  }
+
+};
+
+if (!student) return null;
+
+
+const handleApproveCourse = async (courseId) => {
+
+  try {
+
+    await approveStudentCourse(
+      student.id,
+      courseId
+    );
+
+
+   toast.success(
+  "Course approved successfully"
+  );
+
+    loadCourses();
+
+
+  } catch (err) {
+
+    console.error(err);
+
+   toast.error(
+  "Failed to approve course"
+  );
+
+  }
+
+};
+// new
+
+const handleAssignCourses = async()=>{
+
+try{
+
+await assignStudentCourses(
+ student.id,
+ assignedCourses
+);
+
+
+toast.success(
+ "Courses assigned successfully"
+);
+
+
+loadCourses();
+
+
+}
+catch(err){
+
+console.error(err);
+
+toast.error(
+ "Failed assigning courses"
+);
+
+}
+
+};
+
+const handleRemoveCourse = async(courseId)=>{
+
+try{
+
+await removeStudentCourse(
+ student.id,
+ courseId
+);
+
+
+toast.success(
+ "Course access removed"
+);
+
+
+loadCourses();
+
+
+}
+catch(err){
+
+console.error(err);
+
+toast.error(
+ "Failed removing course"
+);
+
+}
+
+};
 
  const handleAddCredits = async () => {
 
@@ -206,7 +356,9 @@ const handleReactivate = async () => {
 };
 
 
-  return (
+
+
+return (
     <div className="modal-overlay">
 
       <div className="student-modal">
@@ -260,6 +412,8 @@ const handleReactivate = async () => {
             gap: "10px",
           }}
         >
+
+        
          <button
        className="approve-btn"
         onClick={() =>
@@ -299,7 +453,163 @@ const handleReactivate = async () => {
 
         </div>
 
+ <h3>Course Requests</h3>
+
+<div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    marginBottom: "20px",
+  }}
+ >
+ {
+  studentCourses.length > 0 ? (
+
+ studentCourses.map((course)=>(
+
+  <div
+  key={course.courseId}
+  style={{
+    border:"1px solid #ddd",
+    padding:"12px",
+    borderRadius:"8px",
+  }}
+ >
+
+<strong>
+{course.name}
+</strong>
+
+
+<p>
+  Status: {course.status}
+</p>
+
+
+{
+course.status === "pending" && (
+
+<button
+  className="approve-btn"
+  onClick={() =>
+    handleApproveCourse(course.courseId)
+  }
+>
+  Approve
+ </button>
+
+ )
+ }
+
+
+ {
+ course.status === "approved" && (
+
+ <button
+  className="reject-btn"
+  onClick={() =>
+    handleRemoveCourse(course.courseId)
+  }
+ >
+  Remove Access
+</button>
+
+ )
+ }
+
+</div>
+
+ ))
+
+  ) : (
+
+    <p>No course requests found</p>
+
+  )
+ }
+ </div>
+
         <hr />
+
+
+
+<h3>Assign Courses</h3>
+
+
+{
+[
+  {id:1,name:"CCIE Security"},
+  {id:2,name:"CCIE EI"},
+  {id:3,name:"CCIE Wireless"},
+  {id:4,name:"CCIE Data Center"},
+  {id:5,name:"Fortinet NSE 8"}
+]
+.filter(
+  course =>
+    !studentCourses.some(
+      c =>
+        c.courseId === course.id &&
+        c.status === "approved"
+    )
+)
+.map(course => (
+
+<label
+key={course.id}
+style={{
+display:"block",
+margin:"8px"
+}}
+>
+
+<input
+
+type="checkbox"
+
+checked={
+assignedCourses.includes(course.id)
+}
+
+
+onChange={(e)=>{
+
+
+if(e.target.checked){
+
+setAssignedCourses([
+...assignedCourses,
+course.id
+]);
+
+}
+else{
+
+setAssignedCourses(
+assignedCourses.filter(
+(id)=>id!==course.id
+)
+);
+
+}
+
+}}
+
+/>
+
+{course.name}
+
+</label>
+
+))}
+
+
+<button
+className="approve-btn"
+onClick={handleAssignCourses}
+>
+Save Assigned Courses
+</button>
 
         <h3>Bookings</h3>
 
@@ -335,7 +645,9 @@ const handleReactivate = async () => {
 
         </table>
 
-        <hr />
+
+
+        
 
         <h3>Credit History</h3>
 
@@ -540,6 +852,8 @@ const handleReactivate = async () => {
     </div>
 
   </div>
+
+
 
 )}
 

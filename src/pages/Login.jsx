@@ -14,10 +14,9 @@ export default function Login() {
 useEffect(() => {
 
   const token =
-    localStorage.getItem("token");
-
+  localStorage.getItem("token");
   const user = JSON.parse(
-    localStorage.getItem("user")
+  localStorage.getItem("user")
   );
 
   if (
@@ -56,7 +55,6 @@ useEffect(() => {
       // ✅ save admin session
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-
       nav("/admin", { replace: true });
     } catch (err) {
       setMsg(err?.response?.data?.message || "Invalid email or password");
@@ -72,7 +70,6 @@ useEffect(() => {
         <p className="authSub">Authorized personnel only</p>
 
         {msg && <div className="authMsg">{msg}</div>}
-
         <form
           onSubmit={submit}
           className="authForm"

@@ -14,10 +14,8 @@ export default function AdminLayout() {
     }
     return location.pathname.startsWith(path);
   };
-
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const closeSidebar = () => setSidebarOpen(false);
-
   return (
     <div className="admin-layout">
       {/* Mobile Overlay */}
@@ -36,11 +34,9 @@ export default function AdminLayout() {
             ✕
           </button>
         </div>
-
         <div className="admin-title">
           <h3>Admin Panel</h3>
         </div>
-
         <nav className="sidebar-nav">
           {/* Dashboard */}
           <Link
@@ -51,7 +47,6 @@ export default function AdminLayout() {
             <span className="nav-icon">📊</span>
             <span className="nav-text">Dashboard</span>
           </Link>
-
           {/* Users */}
           <Link
             to="/admin/users"
@@ -71,8 +66,6 @@ export default function AdminLayout() {
             <span className="nav-icon">📅</span>
             <span className="nav-text">Bookings</span>
           </Link>
-
-
           <Link
        to="/admin/reports"
        className={`nav-item ${isActive("/admin/reports") ? "active" : ""}`}
@@ -81,6 +74,18 @@ export default function AdminLayout() {
       <span className="nav-icon">📈</span>
       <span className="nav-text">Reports</span>
        </Link>
+
+       {/* System Notices */}
+<Link
+  to="/admin/system-notices"
+  className={`nav-item ${
+    isActive("/admin/system-notices") ? "active" : ""
+  }`}
+  onClick={closeSidebar}
+>
+  <span className="nav-icon">📢</span>
+  <span className="nav-text">System Notices</span>
+</Link>
         </nav>
 
         <div className="sidebar-footer">
@@ -93,7 +98,6 @@ export default function AdminLayout() {
           </div>
         </div>
       </aside>
-
       {/* Main Content */}
       <div className="main-content">
         <header className="top-header">
@@ -102,11 +106,9 @@ export default function AdminLayout() {
             <span className="hamburger"></span>
             <span className="hamburger"></span>
           </button>
-
           <div className="header-title">
             <h2>CCIE Rack Rentals - Admin</h2>
           </div>
-
           <div className="header-actions">
             <button className="notification-btn">
               <span className="notification-icon">🔔</span>
@@ -114,7 +116,6 @@ export default function AdminLayout() {
             </button>
           </div>
         </header>
-
         <main className="page-content">
           <Outlet />
         </main>

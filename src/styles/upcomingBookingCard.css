@@ -1,0 +1,193 @@
+.upcomingBookingCard{
+
+    background:#fff;
+
+    border:1px solid #e8edf4;
+
+    border-radius:18px;
+
+    padding:24px;
+
+    margin-bottom:24px;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.05);
+
+}
+
+.ubHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+.ubTitle{
+
+    font-size:26px;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+.ubStatus{
+
+    background:#e8f7ef;
+
+    color:#11875d;
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+}
+
+.ubGrid{
+
+    display:grid;
+
+grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+
+    gap:24px;
+
+}
+
+.ubItem{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.ubItem label{
+
+    font-size:13px;
+
+    color:#64748b;
+
+    margin-bottom:6px;
+
+}
+
+.ubItem strong{
+
+    font-size:18px;
+
+    color:#111827;
+
+    font-weight:700;
+
+}
+
+.ubEmpty{
+
+    color:#64748b;
+
+    padding:20px 0;
+
+}
+
+@media(max-width:900px){
+
+.ubGrid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:600px){
+
+.ubGrid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+.ubCountdown{
+
+    margin-bottom:24px;
+
+    padding:18px;
+
+    border-radius:14px;
+
+    background:#f8fbff;
+
+    border:1px solid #e3edf9;
+
+}
+
+.ubCountdownLabel{
+
+    font-size:13px;
+
+    color:#64748b;
+
+    margin-bottom:6px;
+
+}
+
+.ubCountdownValue{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#0f172a;
+
+}
+
+.ubActions{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    margin-top:28px;
+
+}
+
+.ubRescheduleBtn{
+
+    background:#0f172a;
+
+    color:#fff;
+
+    border:none;
+
+    padding:12px 22px;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.ubRescheduleBtn:hover{
+
+    background:#1e293b;
+
+}

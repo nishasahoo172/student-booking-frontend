@@ -12,7 +12,7 @@ const Contact = () => {
   });
 
   const [showSuccess, setShowSuccess] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -21,16 +21,18 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
   e.preventDefault();
+
+  setLoading(true);
 
   try {
     const response = await fetch("http://localhost:5001/api/contact", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify(formData),
     });
 
     const data = await response.json();
@@ -39,29 +41,29 @@ const Contact = () => {
       throw new Error(data.message || "Failed to send message");
     }
 
-    // Show success
     setShowSuccess(true);
 
-    // Reset form
     setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      company: '',
-      subject: '',
-      message: ''
+      firstName: "",
+      lastName: "",
+      email: "",
+      company: "",
+      subject: "",
+      message: "",
     });
 
-    // Hide after 5 seconds
     setTimeout(() => {
       setShowSuccess(false);
     }, 5000);
 
   } catch (error) {
-    console.error("Contact form error:", error);
-    alert("Failed to send message. Please try again.");
+    console.error(error);
+    alert("Failed to send message.");
+  } finally {
+    setLoading(false);
   }
 };
+
   const scrollToForm = () => {
     document.getElementById('contact-form').scrollIntoView({ 
       behavior: 'smooth',
@@ -86,14 +88,31 @@ const Contact = () => {
         </p>
         
         <div className="methods-grid">
-          <div className="method-card">
+          {/* <div className="method-card">
             <div className="method-icon">💬</div>
             <h3>Live Chat</h3>
             <p>Get Started with on-demand, billing, and technical assistance.</p>
             <button className="method-btn" onClick={() => alert('Open live chat')}>
               Start chat →
             </button>
-          </div>
+          </div> */}
+          <div className="method-card">
+          <div className="method-icon">📱</div>
+          <h3>Live Chat</h3>
+          <p>Get Started with on-demand, billing, and technical assistance.</p>
+         <button
+         className="method-btn"
+         onClick={() =>
+         window.open(
+          "https://wa.me/917019021129?text=Hi, I need assistance",
+          "_blank"
+         )
+         }
+          >
+        Start chat →
+        </button>
+         </div>
+
 
           <div className="method-card">
             <div className="method-icon">📧</div>
@@ -206,9 +225,20 @@ const Contact = () => {
             />
           </div>
 
-          <button type="submit" className="submit-btn">
-            Send message
-          </button>
+       <button
+  type="submit"
+  className="submit-btn"
+  disabled={loading}
+>
+  {loading ? (
+    <>
+      <span className="spinner"></span>
+      Sending...
+    </>
+  ) : (
+    "Send message"
+  )}
+</button>
 
           {showSuccess && (
             <div className="success-message">

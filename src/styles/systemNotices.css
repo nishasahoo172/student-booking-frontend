@@ -1,0 +1,66 @@
+.action-buttons{
+    display:flex;
+    gap:10px;
+}
+
+.btn-toggle{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:8px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.btn-toggle:hover{
+    background:#1d4ed8;
+}
+
+.btn-delete{
+    background:#dc2626;
+    color:white;
+    border:none;
+    padding:8px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.btn-delete:hover{
+    background:#b91c1c;
+}
+
+.notice-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+.notice-table th{
+    background:#f3f4f6;
+    padding:14px;
+    text-align:left;
+}
+
+.notice-table td{
+    padding:14px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.notice-table tr:hover{
+    background:#fafafa;
+}
+
+.btn-edit{
+    background:#f59e0b;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.btn-edit:hover{
+    background:#d97706;
+}
