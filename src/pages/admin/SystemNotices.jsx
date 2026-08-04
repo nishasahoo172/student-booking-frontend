@@ -125,7 +125,7 @@ const handleSave = async (form) => {
       // Create new notice
       res = await createOperation(payload);
 
- showToast("success", "Notice created successfully.");
+   showToast("success", "Notice created successfully.");
     }
 
     console.log("Response:", res.data);
@@ -142,20 +142,20 @@ const handleSave = async (form) => {
       console.log("Backend Response:", err.response.data);
 
       showToast(
-  "error",
-  err.response.data.message ||
+    "error",
+    err.response.data.message ||
     "Failed to save notice."
-);
+    );
     } else {
     showToast(
-  "error",
-  err.message || "Failed to save notice."
-);
+   "error",
+   err.message || "Failed to save notice."
+   );
     }
-  }
-};
+   }
+   };
 
-const showToast = (type, message) => {
+  const showToast = (type, message) => {
   setToast({
     show: true,
     type,
@@ -169,11 +169,11 @@ const showToast = (type, message) => {
       message: "",
     });
   }, 3000);
-};
+  };
 
-if (loading) {
+  if (loading) {
   return <h3>Loading...</h3>;
-}
+  } 
 
   return (
     <div style={{ padding: 30 }}>

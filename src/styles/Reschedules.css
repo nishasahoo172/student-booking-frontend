@@ -1,0 +1,192 @@
+/* =========================
+   RESCHEDULE HISTORY
+========================= */
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.reschedule-page {
+
+    padding: 20px 30px;
+
+}
+.reschedule-table {
+
+    width: 100%;
+    margin-top: 35px;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+
+}
+
+
+/* Table Header */
+
+.reschedule-table thead {
+
+    background: linear-gradient(
+        135deg,
+        #6366f1,
+        #4f46e5
+    );
+
+}
+
+
+.reschedule-table th {
+
+    color: white;
+    padding: 18px 24px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 600;
+
+}
+
+
+/* Table Body */
+
+.reschedule-table td {
+
+    padding: 22px 24px;
+    font-size: 15px;
+    color: #1f2937;
+    vertical-align: top;
+    line-height: 1.7;
+
+}
+
+
+/* Row */
+
+.reschedule-table tbody tr {
+
+    background: white;
+    transition: 0.3s ease;
+
+}
+
+
+.reschedule-table tbody tr:hover {
+
+    background: #f5f7ff;
+    transform: scale(1.002);
+
+}
+
+
+/* Rounded corners */
+
+.reschedule-table th:first-child {
+
+    border-top-left-radius:16px;
+
+}
+
+
+.reschedule-table th:last-child {
+
+    border-top-right-radius:16px;
+
+}
+
+
+.reschedule-table tr:last-child td:first-child {
+
+    border-bottom-left-radius:16px;
+
+}
+
+
+.reschedule-table tr:last-child td:last-child {
+
+    border-bottom-right-radius:16px;
+
+}
+
+
+
+/* Slot styling */
+
+.reschedule-table td:nth-child(4),
+.reschedule-table td:nth-child(5){
+
+    color:#374151;
+
+}
+
+
+/* Rescheduled By */
+
+.reschedule-table td:nth-child(6){
+
+    font-weight:600;
+    color:#4f46e5;
+
+}
+
+
+
+/* Date */
+
+.reschedule-table td:last-child{
+
+    color:#6b7280;
+    font-size:14px;
+
+}
+
+
+
+/* Filters */
+
+.filter-box{
+
+    display:flex;
+    gap:20px;
+    margin-top:25px;
+
+}
+
+
+.filter-box input,
+.filter-box select{
+
+    height:48px;
+    padding:0 18px;
+    border-radius:10px;
+    border:1px solid #d1d5db;
+    background:white;
+    font-size:15px;
+    outline:none;
+
+}
+
+
+.filter-box input{
+
+    width:380px;
+
+}
+
+
+.filter-box select{
+
+    width:220px;
+
+}
+
+
+.filter-box input:focus,
+.filter-box select:focus{
+
+    border-color:#6366f1;
+    box-shadow:0 0 0 3px rgba(99,102,241,0.15);
+
+}

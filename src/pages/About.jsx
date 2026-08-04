@@ -1,98 +1,140 @@
 import React from 'react';
 import "../styles/about.css";
 
+// import "./About.css";
+
 export default function About() {
+  const stats = [
+    { u: "U03", value: "48", label: "Racks online" },
+    { u: "U02", value: "2.4K", label: "RDCs delivered" },
+    { u: "U01", value: "15 min", label: "Avg. spin-up time" },
+  ];
+
+  const values = [
+    {
+      iface: "Eth1/1",
+      title: "Enterprise-Grade Cisco ACI Hardware",
+      text: "Practice on genuine Cisco ACI infrastructure, including Spine, Leaf, and APIC controllers. Experience real-world enterprise networking instead of simulated environments.",
+    },
+    {
+      iface: "Eth1/2",
+      title: "24×7 Instant Lab Access",
+      text: "Reserve your Cisco ACI rack whenever you need it and start practicing within minutes. Learn at your own pace without depending on physical hardware availability.",
+    },
+    {
+      iface: "Eth1/3",
+      title: "CCIE Data Center Lab Ready",
+      text: "Built specifically for CCIE Data Center candidates, our racks support hands-on practice for ACI, VXLAN EVPN, Multi-Pod, L3Out, Contracts, and enterprise deployment scenarios.",
+    },
+    {
+      iface: "Eth1/4",
+      title: "Secure & Isolated Lab Environment",
+      text: "Every booking is provisioned in an isolated environment with secure remote access. Your configurations remain private, and the lab is automatically reset after each session.",
+    },
+    {
+      iface: "Eth1/5",
+      title: "Practice Real Enterprise Scenarios",
+      text: "Deploy production-style topologies, validate migration plans, troubleshoot complex issues, and test new configurations before implementing them in live environments.",
+    },
+    {
+      iface: "Eth1/6",
+      title: "Flexible Pricing & Easy Booking",
+      text: "Pay only for the lab time you need. Book hourly sessions, extend reservations when required, and gain affordable access to enterprise Cisco ACI hardware without a large investment.",
+    },
+  ];
+
   return (
-    <div className="about-wrapper">
-      <div className="about-container">
-        {/* Header Section */}
-        <section className="header-section">
-          <div className="header-content">
-            <div className="header-text">
-              <h1 className="main-title">About ACI Rack Rentals</h1>
-              <p className="description">
-                We started ACI Rack Rentals to put enterprise-grade hardware in the hands of every engineer—no cold contract or six-figure budget required. Our fully automated lab platform lets you validate designs, rehearse upgrades, and ace certifications on the exact gear you'll run in prod.
-              </p>
-              <p className="description">
-                Each reservation powers up a clean slate, boots your chosen ACI image, and exposes secure console endpoints within minutes. When your session ends, a cryptographic wipe destroys configs and logs, ensuring complete isolation for the next user.
-              </p>
-            </div>
-            
-            <div className="stats-container">
-              <div className="stat-card stat-purple">
-                <div className="stat-number">48</div>
-                <div className="stat-label">Racks online</div>
+    <div className="rack-page">
+      <div className="rack-container">
+        {/* Header */}
+        <section className="rack-header">
+          <div className="rack-header-copy">
+            <p className="eyebrow">
+              <span className="led led-accent" aria-hidden="true" />
+              Rack Rental // Cisco ACI Fabric
+            </p>
+            <h1 className="rack-title">
+              Why Choose Our Cisco ACI Rack Rental Lab?
+            </h1>
+            <p className="rack-desc">
+              Get instant access to a real Cisco ACI environment without
+              investing in expensive enterprise hardware. Our Cisco ACI Rack
+              Rental platform is built for network engineers, CCIE
+              candidates, consultants, and IT professionals who want
+              practical experience with production-grade infrastructure.
+              Practice real deployment scenarios, validate configurations,
+              and strengthen your hands-on skills anytime from anywhere.
+            </p>
+            <p className="rack-desc">
+              Every reserved lab session provides a dedicated Cisco ACI
+              environment with secure remote access and preconfigured
+              enterprise hardware. Test new features, perform upgrades,
+              build VXLAN EVPN fabrics, troubleshoot complex issues, and
+              prepare confidently for certification exams. After every
+              session, the lab is automatically reset to a clean state,
+              ensuring a secure, isolated, and consistent learning
+              experience for every engineer.
+            </p>
+          </div>
+
+          <div className="chassis-rail" role="list" aria-label="Platform stats">
+            {stats.map((s) => (
+              <div className="chassis-card" role="listitem" key={s.u}>
+                <span className="chassis-u">{s.u}</span>
+                <span className="chassis-value">{s.value}</span>
+                <span className="chassis-label">{s.label}</span>
               </div>
-              <div className="stat-card stat-blue">
-                <div className="stat-number">2.4K</div>
-                <div className="stat-label">RDCs delivered</div>
-              </div>
-              <div className="stat-card stat-indigo">
-                <div className="stat-number">15 min</div>
-                <div className="stat-label">Avg. spin-up time</div>
-              </div>
-            </div>
+            ))}
           </div>
         </section>
 
-        {/* Image Section */}
-        <section className="image-section">
-          <img 
-            src="https://images.unsplash.com/photo-1598257006458-087169a1f08d?auto=format&fit=crop&w=1500&q=80" 
-            alt="Professional woman on phone in office"
-            className="hero-image"
-          />
+        {/* Console / image section */}
+        <section className="console-section">
+          <div className="console-frame">
+            <span className="screw screw-tl" aria-hidden="true" />
+            <span className="screw screw-tr" aria-hidden="true" />
+            <span className="screw screw-bl" aria-hidden="true" />
+            <span className="screw screw-br" aria-hidden="true" />
+            <img
+              src="https://images.unsplash.com/photo-1598257006458-087169a1f08d?auto=format&fit=crop&w=1500&q=80"
+              alt="Professional woman on phone in office"
+              className="console-image"
+            />
+            <div className="console-tag">Live feed // Console access</div>
+          </div>
         </section>
 
-        {/* Values Section */}
-        <section className="values-section">
-          <h2 className="section-title">Our values</h2>
-          <p className="section-subtitle">
-            The principles that guide every feature we build and every rack we maintain.
-          </p>
+        {/* Values / patch panel section */}
+        <section className="patch-section">
+          <div className="patch-heading">
+            <p className="eyebrow">
+              <span className="led led-accent" aria-hidden="true" />
+              Fabric // Values
+            </p>
+            <h2 className="patch-title">Our values</h2>
+            <p className="patch-subtitle">
+              Designed to deliver enterprise-grade hands-on experience with
+              real Cisco ACI hardware for learning, testing, certification,
+              and production validation.
+            </p>
+          </div>
 
-          <div className="values-grid">
-            <div className="value-card">
-              <h3 className="value-title">Real hardware, real results</h3>
-              <p className="value-text">
-                Every lab runs on production-grade Cisco leaf, spine, and fabric kit. You get real metal to run real workloads, no compromise. What you test here behaves exactly like your sale's corner fabric.
-              </p>
-            </div>
-
-            <div className="value-card">
-              <h3 className="value-title">Automation first</h3>
-              <p className="value-text">
-                From power-on to clean wipe, our pipeline handles imaging, cabling, and snapshots so you spend time validating design—not waiting on gear.
-              </p>
-            </div>
-
-            <div className="value-card">
-              <h3 className="value-title">Zero vendor bias</h3>
-              <p className="value-text">
-                We host vanilla images straight from Cisco and let you load your own tools. Results are yours; we don't gate features behind a paywall.
-              </p>
-            </div>
-
-            <div className="value-card">
-              <h3 className="value-title">Security & privacy</h3>
-              <p className="value-text">
-                Isolated VLANs, TLS-only console endpoints, and auto-wipe scripts ensure your configs, keys, and logs are gone the moment your booking ends.
-              </p>
-            </div>
-
-            <div className="value-card">
-              <h3 className="value-title">Community-driven learning</h3>
-              <p className="value-text">
-                We publish reference topologies and share-play videos so every engineer can level up, not just the ones with big hardware budgets.
-              </p>
-            </div>
-
-            <div className="value-card">
-              <h3 className="value-title">Fair, transparent pricing</h3>
-              <p className="value-text">
-                Our ticker model charges by the hour—pause anytime, never lose unused balance, and see exactly where every token goes.
-              </p>
-            </div>
+          <div className="patch-grid">
+            {values.map((v, i) => (
+              <div
+                className="patch-module"
+                tabIndex={0}
+                key={v.iface}
+                style={{ "--delay": `${i * 0.12}s` }}
+              >
+                <div className="patch-module-head">
+                  <span className="patch-led" aria-hidden="true" />
+                  <span className="patch-iface">{v.iface}</span>
+                </div>
+                <h3 className="value-title">{v.title}</h3>
+                <p className="value-text">{v.text}</p>
+              </div>
+            ))}
           </div>
         </section>
       </div>

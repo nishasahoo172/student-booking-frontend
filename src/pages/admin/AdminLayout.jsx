@@ -66,6 +66,18 @@ export default function AdminLayout() {
             <span className="nav-icon">📅</span>
             <span className="nav-text">Bookings</span>
           </Link>
+
+         <Link
+        to="/admin/reschedules"
+        className={`nav-item ${
+         isActive("/admin/reschedules") ? "active" : ""
+         }`}
+        onClick={closeSidebar}
+         >
+        <span className="nav-icon">🔄</span>
+         <span className="nav-text">Reschedules</span>
+         </Link>
+
           <Link
        to="/admin/reports"
        className={`nav-item ${isActive("/admin/reports") ? "active" : ""}`}
@@ -76,17 +88,17 @@ export default function AdminLayout() {
        </Link>
 
        {/* System Notices */}
-<Link
-  to="/admin/system-notices"
-  className={`nav-item ${
+    <Link
+    to="/admin/system-notices"
+    className={`nav-item ${
     isActive("/admin/system-notices") ? "active" : ""
-  }`}
-  onClick={closeSidebar}
->
-  <span className="nav-icon">📢</span>
-  <span className="nav-text">System Notices</span>
-</Link>
-        </nav>
+    }`}
+    onClick={closeSidebar}
+   >
+   <span className="nav-icon">📢</span>
+   <span className="nav-text">System Notices</span>
+    </Link>
+    </nav>
 
         <div className="sidebar-footer">
           <div className="admin-profile">

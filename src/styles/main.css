@@ -15,6 +15,9 @@
 *{
   box-sizing:border-box;
 }
+main[style]{
+    padding-top:0 !important;
+}
 
 body {
   margin: 0;

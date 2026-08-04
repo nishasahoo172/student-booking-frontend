@@ -92,3 +92,8 @@ export const removeStudentCourse = (
 axios.put(
  `${API}/users/${userId}/courses/${courseId}/remove`
 );
+
+export const getRescheduleHistory = () =>
+  axios.get(
+    `${API}/reschedule-history`
+  );

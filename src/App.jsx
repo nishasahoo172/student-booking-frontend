@@ -28,6 +28,7 @@ import PurchaseHistory from "./pages/PurchaseHistory";
 import CreditHistory from "./pages/CreditHistory";
 import BuyCredits from "./pages/BuyCredits";
 import Reports from "./pages/admin/Reports";
+import Reschedules from "./pages/admin/Reschedules";
 import SystemNotices from "./pages/admin/SystemNotices";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -50,23 +51,25 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/account-pending" element={<AccountPending />} />
         <Route path="/pending-approval" element={<PendingApproval />} />
+     
       </Route>
 
       {/* ================= ADMIN ================= */}
       {/* <Route path="/admin" element={<AdminLayout />}> */}
       <Route
-  path="/admin"
-  element={
-    <AdminProtectedRoute>
-      <AdminLayout />
-    </AdminProtectedRoute>
-  }
->
+      path="/admin"
+      element={
+      <AdminProtectedRoute>
+       <AdminLayout />
+      </AdminProtectedRoute>
+     }
+    >
         <Route index element={<AdminDashboard />} />
         <Route path="users" element={<AdminUsers />} />
         <Route path="bookings" element={<AdminBookings />} />
         <Route path="reports" element={<Reports />} />
           <Route path="system-notices" element={<SystemNotices />} />
+            <Route path="reschedules" element={<Reschedules />} />
       </Route>
 
       {/* ================= DYNAMIC ================= */}

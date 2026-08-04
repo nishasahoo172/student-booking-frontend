@@ -406,9 +406,9 @@ const tracks = [
                 attempt thanks to the realistic practice environment. Highly recommended!"
               </p>
               <div className="testimonialAuthor">
-                <div className="authorAvatar">
+                {/* <div className="authorAvatar">
                   <img src="/assets/avatar1.png" alt="John" />
-                </div>
+                </div> */}
                 <div className="authorInfo">
                   <h4>John Anderson</h4>
                   <p>CCIE R&S #54321</p>
@@ -423,9 +423,9 @@ const tracks = [
                 according to my schedule. The equipment is always up-to-date and reliable."
               </p>
               <div className="testimonialAuthor">
-                <div className="authorAvatar">
+                {/* <div className="authorAvatar">
                   <img src="/assets/avatar2.png" alt="Sarah" />
-                </div>
+                </div> */}
                 <div className="authorInfo">
                   <h4>Sarah Chen</h4>
                   <p>CCIE Security #65432</p>
@@ -439,9 +439,9 @@ const tracks = [
                 the difference. Customer support is incredibly responsive and helpful."
               </p>
               <div className="testimonialAuthor">
-                <div className="authorAvatar">
+                {/* <div className="authorAvatar">
                   <img src="/assets/avatar3.png" alt="Michael" />
-                </div>
+                </div> */}
                 <div className="authorInfo">
                   <h4>Michael Park</h4>
                   <p>CCIE Collaboration #76543</p>
