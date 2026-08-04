@@ -35,7 +35,7 @@ export default function Navbar() {
   const menu = useMemo(
     () => ({
       Cisco: {
-        "Technology Lab": [{ label: "CCNA", to: "/cisco/ccna" }],
+        // "Technology Lab": [{ label: "CCNA", to: "/cisco/ccna" }],
 
         CCIE: [
           {
@@ -45,7 +45,7 @@ export default function Navbar() {
               { label: "EI v1.1 Topology", to: "/placeholder" },
               { label: "Scheduler", to: "/ei-scheduler" },
               { label: "Rack Access Guide", to: "/placeholder" },
-              { label: "Buy Now", to: "/placeholder" },
+              // { label: "Buy Now", to: "/placeholder" },
             ],
           },
 
@@ -56,7 +56,7 @@ export default function Navbar() {
               { label: "SEC v6.1 Topology", to: "/placeholder" },
               { label: "Scheduler", to: "/security-scheduler" },
               { label: "Rack Access Guide", to: "/placeholder" },
-              { label: "Buy Now", to: "/placeholder" },
+              // { label: "Buy Now", to: "/placeholder" },
             ],
           },
 
@@ -67,7 +67,7 @@ export default function Navbar() {
               { label: "Topology", to: "/placeholder" },
               { label: "Scheduler", to: "/dc-scheduler" },
               { label: "Rack Access Guide", to: "/placeholder" },
-              { label: "Buy Now", to: "/placeholder" },
+              // { label: "Buy Now", to: "/placeholder" },
             ],
           },
 
@@ -78,7 +78,7 @@ export default function Navbar() {
               { label: "Topology", to: "/placeholder" },
               { label: "Scheduler", to: "/wireless-scheduler" },
               { label: "Rack Access Guide", to: "/placeholder" },
-              { label: "Buy Now", to: "/placeholder" },
+              // { label: "Buy Now", to: "/placeholder" },
             ],
           },
         ],
@@ -93,7 +93,7 @@ export default function Navbar() {
               { label: "Topology", to: "/placeholder" },
               { label: "Scheduler", to: "/fcx-scheduler" },
               { label: "Rack Access Guide", to: "/placeholder" },
-              { label: "Buy Now", to: "/placeholder" },
+              // { label: "Buy Now", to: "/placeholder" },
             ],
           },
         ],

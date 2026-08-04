@@ -62,7 +62,7 @@ const Contact = () => {
   } finally {
     setLoading(false);
   }
-};
+  };
 
   const scrollToForm = () => {
     document.getElementById('contact-form').scrollIntoView({ 
@@ -76,15 +76,14 @@ const Contact = () => {
       {/* Header Section */}
       <div className="contact-header">
         <h1>Get in Touch</h1>
-        <p>Need help with your AC unit? Have questions about rent availability or token pricing? Our team is here to get you what you're looking for.</p>
+        <p>Looking for reliable AC rental services? Our team is here to help you find the right cooling solution with flexible rental plans and quick support.</p>
       </div>
 
       {/* Contact Methods */}
       <div className="contact-methods">
         <h2 className="methods-title">Choose your preferred way to connect</h2>
         <p className="methods-subtitle">
-          Whatever you need: Live or pre-scheduled support, a custom plan, 
-          or a module campaign to ensure you get the assistance you need.
+         Choose the contact option that works best for you. Our team is ready to assist with AC rental inquiries, pricing, bookings, and personalized solutions.
         </p>
         
         <div className="methods-grid">
@@ -226,19 +225,19 @@ const Contact = () => {
           </div>
 
        <button
-  type="submit"
-  className="submit-btn"
-  disabled={loading}
->
-  {loading ? (
+     type="submit"
+     className="submit-btn"
+    disabled={loading}
+   >
+    {loading ? (
     <>
       <span className="spinner"></span>
       Sending...
     </>
-  ) : (
+    ) : (
     "Send message"
-  )}
-</button>
+    )}
+    </button>
 
           {showSuccess && (
             <div className="success-message">

@@ -358,7 +358,7 @@ const handleReactivate = async () => {
 
 
 
-return (
+   return (
     <div className="modal-overlay">
 
       <div className="student-modal">
@@ -453,17 +453,17 @@ return (
 
         </div>
 
- <h3>Course Requests</h3>
+  <h3>Course Requests</h3>
 
-<div
+  <div
   style={{
     display: "flex",
     flexDirection: "column",
     gap: "10px",
     marginBottom: "20px",
   }}
- >
- {
+  >
+  {
   studentCourses.length > 0 ? (
 
  studentCourses.map((course)=>(
@@ -475,11 +475,11 @@ return (
     padding:"12px",
     borderRadius:"8px",
   }}
- >
+   >
 
-<strong>
-{course.name}
-</strong>
+  <strong>
+ {course.name}
+ </strong>
 
 
 <p>
@@ -530,7 +530,7 @@ course.status === "pending" && (
  }
  </div>
 
-        <hr />
+     <hr />
 
 
 
@@ -604,12 +604,12 @@ assignedCourses.filter(
 ))}
 
 
-<button
-className="approve-btn"
-onClick={handleAssignCourses}
->
-Save Assigned Courses
-</button>
+ <button
+  className="approve-btn"
+ onClick={handleAssignCourses}
+ >
+ Save Assigned Courses
+ </button>
 
         <h3>Bookings</h3>
 
@@ -646,8 +646,6 @@ Save Assigned Courses
         </table>
 
 
-
-        
 
         <h3>Credit History</h3>
 
@@ -799,11 +797,9 @@ Save Assigned Courses
 
       )}
 
-
-
       {showRejectModal && (
 
-  <div className="modal-overlay">
+     <div className="modal-overlay">
 
     <div className="edit-modal">
 
@@ -827,7 +823,6 @@ Save Assigned Courses
       />
 
       <div className="edit-actions">
-
         <button
           className="reject-btn"
           onClick={handleRejectStudent}
@@ -852,8 +847,6 @@ Save Assigned Courses
     </div>
 
   </div>
-
-
 
 )}
 
