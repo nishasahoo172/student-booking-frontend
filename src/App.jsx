@@ -18,6 +18,11 @@ import SchedulerGate from "./pages/SchedulerGate";
 import SchedulerPage from "./pages/SchedulerPage";
 import SchedulerAccessGuard from "./components/SchedulerAccessGuard";
 import Placeholder from "./pages/Placeholder";
+import CCIEWirelessEquipment from "./pages/CCIEWirelessEquipment";
+import CCIESecurityEquipment from "./pages/CCIESecurityEquipment";
+import CCIEDataCenterEquipment from "./pages/CCIEDataCenterEquipment";
+import FortinetFcx8Equipment from "./pages/FortinetFcx8Equipment";
+import CCIEEIEquipment from "./pages/CCIEEIEquipment";
 
 // ADMIN
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -51,7 +56,11 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/account-pending" element={<AccountPending />} />
         <Route path="/pending-approval" element={<PendingApproval />} />
-     
+         <Route path="/ccie-wireless-equipment" element={<CCIEWirelessEquipment />} />
+         <Route path="/ccie-security-equipment" element={<CCIESecurityEquipment />} />
+         <Route path="/ccie-data-center-equipment" element={<CCIEDataCenterEquipment />} />
+          <Route path="/fortinet-fcx8-equipment" element={<FortinetFcx8Equipment />} />
+        <Route path="/ccie-ei-equipment" element={<CCIEEIEquipment />} />
       </Route>
 
       {/* ================= ADMIN ================= */}

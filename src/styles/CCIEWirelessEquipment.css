@@ -1,0 +1,263 @@
+/* CCIEWirelessEquipment.css */
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap");
+
+.wireless-equipment-page {
+  --ink: #10151c;
+  --ink-soft: #4b5563;
+  --ink-faint: #8a93a1;
+  --line: #e4e7ec;
+  --surface: #f7f8fa;
+  --signal: #0f62d6;
+  --signal-soft: #eaf1fc;
+  --amber: #b6650a;
+  --amber-soft: #fbf1e2;
+
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+
+  background: #ffffff;
+  color: var(--ink);
+  font-family: var(--font-body);
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 4rem;
+  box-sizing: border-box;
+}
+
+.wireless-equipment-page * {
+  box-sizing: border-box;
+}
+
+/* ---------- Hero ---------- */
+
+.we-hero {
+  margin-bottom: 3rem;
+}
+
+.we-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--signal);
+  text-transform: uppercase;
+  margin: 0 0 0.85rem;
+}
+
+.we-hero h1 {
+  font-family: var(--font-display);
+ font-weight: 700;
+  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.9rem;
+  color: var(--ink);
+}
+
+
+
+.we-intro {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 56ch;
+  margin: 0 0 2rem;
+}
+
+.we-scope {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.we-scope-block {
+  background: var(--surface);
+  padding: 1.1rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.we-scope-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.we-scope-value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.we-scope-sub {
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ---------- Stack ---------- */
+
+.we-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.we-layer {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 1.5rem;
+}
+
+.we-layer-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.we-layer-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--signal);
+  background: var(--signal-soft);
+  border: 1px solid #cfe0f8;
+  border-radius: 999px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.we-layer-line {
+  width: 1px;
+  flex: 1;
+  min-height: 1.5rem;
+  margin: 0.4rem 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--line) 0,
+    var(--line) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+.we-layer-body {
+  padding-bottom: 2.1rem;
+}
+
+.we-layer-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+}
+
+.we-layer-head h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin: 0;
+  color: var(--ink);
+}
+
+.we-layer-role {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+}
+
+.we-item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.we-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.1rem;
+  background: #ffffff;
+}
+
+.we-item + .we-item {
+  border-top: 1px solid var(--line);
+}
+
+.we-item-name {
+  font-size: 0.95rem;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.we-item-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--amber);
+  background: var(--amber-soft);
+  border: 1px solid #f0dcb8;
+  border-radius: 5px;
+  padding: 0.2rem 0.5rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ---------- Footer ---------- */
+
+.we-footer {
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .wireless-equipment-page {
+    padding: 2.25rem 1.1rem 3rem;
+  }
+
+  .we-scope {
+    grid-template-columns: 1fr;
+  }
+
+  .we-layer {
+    grid-template-columns: 40px 1fr;
+    gap: 1rem;
+  }
+
+  .we-layer-num {
+    width: 28px;
+    height: 28px;
+    font-size: 0.68rem;
+  }
+
+  .we-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .we-item-tag {
+    align-self: flex-start;
+  }
+}
