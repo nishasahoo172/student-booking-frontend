@@ -111,8 +111,6 @@ const Contact = () => {
         Start chat →
         </button>
          </div>
-
-
           <div className="method-card">
             <div className="method-icon">📧</div>
             <h3>Email Support</h3>

@@ -41,7 +41,7 @@ export default function Navbar() {
           {
             label: "EI",
             children: [
-              { label: "Equipment", to: "/placeholder" },
+              { label: "Equipment", to: "/ccie-ei-equipment" },
               { label: "EI v1.1 Topology", to: "/placeholder" },
               { label: "Scheduler", to: "/ei-scheduler" },
               { label: "Rack Access Guide", to: "/placeholder" },
@@ -52,7 +52,7 @@ export default function Navbar() {
           {
             label: "Security",
             children: [
-              { label: "Equipment", to: "/placeholder" },
+              { label: "Equipment", to: "/ccie-security-equipment" },
               { label: "SEC v6.1 Topology", to: "/placeholder" },
               { label: "Scheduler", to: "/security-scheduler" },
               { label: "Rack Access Guide", to: "/placeholder" },
@@ -63,7 +63,7 @@ export default function Navbar() {
           {
             label: "Data Center",
             children: [
-              { label: "Equipment", to: "/placeholder" },
+              { label: "Equipment", to: "/ccie-data-center-equipment" },
               { label: "Topology", to: "/placeholder" },
               { label: "Scheduler", to: "/dc-scheduler" },
               { label: "Rack Access Guide", to: "/placeholder" },
@@ -74,7 +74,7 @@ export default function Navbar() {
           {
             label: "Wireless",
             children: [
-              { label: "Equipment", to: "/placeholder" },
+              { label: "Equipment", to: "/ccie-wireless-equipment" },
               { label: "Topology", to: "/placeholder" },
               { label: "Scheduler", to: "/wireless-scheduler" },
               { label: "Rack Access Guide", to: "/placeholder" },
@@ -89,7 +89,8 @@ export default function Navbar() {
           {
             label: "NSE8 / FCX",
             children: [
-              { label: "Equipment", to: "/placeholder" },
+             { label: "Equipment", to: "/fortinet-fcx8-equipment" },
+            
               { label: "Topology", to: "/placeholder" },
               { label: "Scheduler", to: "/fcx-scheduler" },
               { label: "Rack Access Guide", to: "/placeholder" },
