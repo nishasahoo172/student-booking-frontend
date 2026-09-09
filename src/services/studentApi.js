@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://localhost:5001/api/admin";
+const API = `${import.meta.env.VITE_API_URL}/admin`;
 
 export const getStudentById = (id) =>
   axios.get(`${API}/users/${id}`);
