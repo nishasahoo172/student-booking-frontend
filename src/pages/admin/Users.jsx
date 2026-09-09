@@ -4,6 +4,7 @@ import { getUsers, approveUser } from "../../services/adminApi";
 import {
   getStudentById,
   getStudentCredits,
+  reactivateStudent,
 } from "../../services/studentApi";
 
 import StudentModal from "./StudentModal";
@@ -52,6 +53,7 @@ export default function Users() {
       alert("Failed to load student details");
     }
   };
+
 
 
 
@@ -160,6 +162,15 @@ const filteredUsers =
                     >
                       View
                     </button>
+
+                    {u.status === "rejected" && (
+                    <button
+                     className="approve-btn"
+                     onClick={() => handleReactivate(u.id)}
+                      >
+                   Reactivate
+                   </button>
+                    )}
 
                     {u.status === "pending" && (
                       <button
