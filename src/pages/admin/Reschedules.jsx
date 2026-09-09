@@ -1,6 +1,6 @@
 import {useEffect,useState} from "react";
 import api from "../../services/api";
-import "../../styles/reschedules.css";
+import "../../styles/Reschedules.css";
 
 export default function Reschedules(){
 
