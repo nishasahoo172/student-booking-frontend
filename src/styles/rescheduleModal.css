@@ -1,0 +1,281 @@
+.rbOverlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(15,23,42,.45);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+}
+
+.rbModal {
+
+    width: 650px;
+    max-width: 95%;
+
+    background: #fff;
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,.18);
+
+    /* ADD THESE */
+    max-height: 90vh;
+    overflow-y: auto;
+
+}
+
+.rbModal h2{
+
+    margin:0;
+
+    font-size:28px;
+
+    color:#0f172a;
+
+}
+
+.rbModal p{
+
+    margin-top:10px;
+
+    color:#64748b;
+
+    line-height:1.6;
+
+}
+
+.rbActions{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    margin-top:30px;
+    gap: 12px;
+}
+
+.rbActions button{
+
+    background:#0f172a;
+
+    color:#fff;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:12px 22px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}
+
+.rbActions button:hover{
+
+    background:#1e293b;
+
+}
+
+.rbCurrentBooking{
+
+    margin-top:28px;
+
+    padding:20px;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:14px;
+
+    background:#f8fafc;
+
+}
+
+.rbCurrentBooking h3{
+
+    margin:0 0 18px;
+
+    font-size:20px;
+
+    color:#0f172a;
+
+}
+
+.rbRow{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #eef2f7;
+
+}
+
+.rbRow:last-child{
+
+    border-bottom:none;
+
+}
+
+.rbRow span{
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+.rbRow strong{
+
+    color:#111827;
+
+    font-size:16px;
+
+    font-weight:600;
+
+}
+
+
+.rbNewBooking{
+
+    margin-top:30px;
+
+}
+
+.rbNewBooking h3{
+
+    margin-bottom:18px;
+
+    color:#0f172a;
+
+}
+
+.rbField{
+
+    display:flex;
+
+    flex-direction:column;
+
+    margin-bottom:18px;
+
+}
+
+.rbField label{
+
+    margin-bottom:8px;
+
+    font-size:14px;
+
+    color:#64748b;
+
+}
+
+.rbField input,
+.rbField select{
+
+    height:46px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    padding:0 14px;
+
+    font-size:15px;
+
+    background:#fff;
+
+}
+
+.rbField input:focus,
+.rbField select:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+}
+
+.rbAvailableSlots{
+
+    margin-top:28px;
+
+}
+
+.rbSlotPlaceholder{
+
+    padding:20px;
+
+    border:1px dashed #cbd5e1;
+
+    border-radius:12px;
+
+    background:#f8fafc;
+
+    color:#64748b;
+
+    text-align:center;
+
+}
+
+.rbAvailableSlots{
+    margin-top:32px;
+}
+
+.rbSlotHint{
+    color:#64748b;
+    margin:8px 0 20px;
+}
+
+.rbSlots{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+    gap:14px;
+}
+
+.rbSlots{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:12px;
+}
+
+.rbSlot{
+    border:1px solid #d1d5db;
+    background:#fff;
+    padding:10px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.rbSlot:hover{
+    background:#f3f4f6;
+}
+
+.rbSlot.selected{
+    background:#2563eb;
+    color:#fff;
+    border-color:#2563eb;
+}
+
+.rbNoSlots{
+    color:#6b7280;
+    padding:10px 0;
+}
