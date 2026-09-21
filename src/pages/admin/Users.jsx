@@ -1,4 +1,4 @@
-
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { getUsers, approveUser } from "../../services/adminApi";
 import {
@@ -33,6 +33,34 @@ export default function Users() {
     await approveUser(email);
     load();
   };
+
+  const handleReactivate = async (id) => {
+  try {
+    await reactivateStudent(id);
+
+    setUsers((prevUsers) =>
+      prevUsers.map((user) =>
+        user.id === id
+          ? {
+              ...user,
+              status: "active",
+              rejectedReason: null,
+            }
+          : user
+      )
+    );
+
+    toast.success("Student reactivated successfully");
+  } catch (err) {
+    console.error("Reactivate failed:", err);
+
+    toast.error(
+      err?.response?.data?.message ||
+      "Failed to reactivate student"
+    );
+  }
+};
+
 
   const viewStudent = async (id) => {
     try {

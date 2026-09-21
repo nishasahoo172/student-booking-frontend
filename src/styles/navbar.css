@@ -332,6 +332,12 @@
 @media (max-width: 900px) {
   .hamburger {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    padding: 8px 10px;
+    font-size: 20px;
+    line-height: 1;
   }
   .desktopOnly {
     display: none;
