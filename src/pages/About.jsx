@@ -54,7 +54,7 @@ export default function About() {
               Rack Rental // Cisco ACI Fabric
             </p>
             <h1 className="rack-title">
-           Why Choose Our Cisco ACI Rack Rental Lab Test?
+           Why Choose Our Cisco ACI Rack Rental Lab ?
             </h1>
             <p className="rack-desc">
               Get instant access to a real Cisco ACI environment without
