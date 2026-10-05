@@ -35,7 +35,7 @@ export default function Footer() {
               <h3 className="footerHeading">Contact Us</h3>
               <div className="contactInfo">
                 <div className="contactItem">
-                  <span>support.ccielabtraining.com</span>
+                  <span>support@ccielabtraining.com</span>
                 </div>
                 <div className="contactItem">
                   <span>+91 7760144441</span>
