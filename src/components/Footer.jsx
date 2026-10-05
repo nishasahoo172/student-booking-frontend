@@ -24,8 +24,9 @@ export default function Footer() {
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About Us</a></li>
                 <li><a href="/contact">Contact Us</a></li>
-                <li><a href="/terms">Terms & Conditions</a></li>
-                <li><a href="/privacy">Privacy Policy</a></li>
+              
+                <li><a href="/terms-and-conditions">Terms & Conditions</a></li>
+             <li><a href="/privacy-policy">Privacy Policy</a></li>
               </ul>
             </div>
 
@@ -34,10 +35,10 @@ export default function Footer() {
               <h3 className="footerHeading">Contact Us</h3>
               <div className="contactInfo">
                 <div className="contactItem">
-                  <span>support@ccierack.rentals</span>
+                  <span>support.ccielabtraining.com</span>
                 </div>
                 <div className="contactItem">
-                  <span>+1 951-376-4336</span>
+                  <span>+91 7760144441</span>
                 </div>
               </div>
               <h4 className="connectHeading">Connect with us</h4>

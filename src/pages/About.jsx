@@ -1,7 +1,5 @@
-import React from 'react';
+import React from "react";
 import "../styles/about.css";
-
-// import "./About.css";
 
 export default function About() {
   const stats = [
@@ -44,19 +42,24 @@ export default function About() {
   ];
 
   return (
-    <div className="rack-page">
-      <div className="rack-container">
-        {/* Header */}
-        <section className="rack-header">
-          <div className="rack-header-copy">
-            <p className="eyebrow">
-              <span className="led led-accent" aria-hidden="true" />
-              Rack Rental // Cisco ACI Fabric
-            </p>
-            <h1 className="rack-title">
-           Why Choose Our Cisco ACI Rack Rental Lab ?
+    <div className="aci-page">
+      <div className="aci-wrap">
+        {/* Hero: image full-bleed with text panel overlapping */}
+        <section className="aci-hero">
+          <div className="aci-hero-media">
+            <img
+              src="https://images.pexels.com/photos/2881232/pexels-photo-2881232.jpeg?auto=compress&cs=tinysrgb&w=1500"
+              alt="Professional woman on phone in office"
+              className="aci-hero-img"
+            />
+          </div>
+
+          <div className="aci-hero-panel">
+            <p className="aci-kicker">Rack Rental // Cisco ACI Fabric</p>
+            <h1 className="aci-title">
+              Why Choose Our Cisco ACI Rack Rental Lab ?
             </h1>
-            <p className="rack-desc">
+            <p className="aci-body">
               Get instant access to a real Cisco ACI environment without
               investing in expensive enterprise hardware. Our Cisco ACI Rack
               Rental platform is built for network engineers, CCIE
@@ -65,7 +68,7 @@ export default function About() {
               Practice real deployment scenarios, validate configurations,
               and strengthen your hands-on skills anytime from anywhere.
             </p>
-            <p className="rack-desc">
+            <p className="aci-body">
               Every reserved lab session provides a dedicated Cisco ACI
               environment with secure remote access and preconfigured
               enterprise hardware. Test new features, perform upgrades,
@@ -76,66 +79,40 @@ export default function About() {
               experience for every engineer.
             </p>
           </div>
-
-          <div className="chassis-rail" role="list" aria-label="Platform stats">
-            {stats.map((s) => (
-              <div className="chassis-card" role="listitem" key={s.u}>
-                <span className="chassis-u">{s.u}</span>
-                <span className="chassis-value">{s.value}</span>
-                <span className="chassis-label">{s.label}</span>
-              </div>
-            ))}
-          </div>
         </section>
 
-        {/* Console / image section */}
-        <section className="console-section">
-          <div className="console-frame">
-            <span className="screw screw-tl" aria-hidden="true" />
-            <span className="screw screw-tr" aria-hidden="true" />
-            <span className="screw screw-bl" aria-hidden="true" />
-            <span className="screw screw-br" aria-hidden="true" />
-            <img
-              src="https://images.unsplash.com/photo-1598257006458-087169a1f08d?auto=format&fit=crop&w=1500&q=80"
-              alt="Professional woman on phone in office"
-              className="console-image"
-            />
-            <div className="console-tag">Live feed // Console access</div>
-          </div>
+        {/* Stats strip */}
+        <section className="aci-stats" aria-label="Platform stats">
+          {stats.map((s) => (
+            <div className="aci-stat" key={s.u}>
+              <span className="aci-stat-value">{s.value}</span>
+              <span className="aci-stat-label">{s.label}</span>
+              <span className="aci-stat-u">{s.u}</span>
+            </div>
+          ))}
         </section>
 
-        {/* Values / patch panel section */}
-        <section className="patch-section">
-          <div className="patch-heading">
-            <p className="eyebrow">
-              <span className="led led-accent" aria-hidden="true" />
-              Fabric // Values
-            </p>
-            <h2 className="patch-title">Our values</h2>
-            <p className="patch-subtitle">
+        {/* Values */}
+        <section className="aci-values">
+          <div className="aci-values-intro">
+            <p className="aci-kicker">Fabric // Values</p>
+            <h2 className="aci-subtitle">Our values</h2>
+            <p className="aci-intro-text">
               Designed to deliver enterprise-grade hands-on experience with
               real Cisco ACI hardware for learning, testing, certification,
               and production validation.
             </p>
           </div>
 
-          <div className="patch-grid">
-            {values.map((v, i) => (
-              <div
-                className="patch-module"
-                tabIndex={0}
-                key={v.iface}
-                style={{ "--delay": `${i * 0.12}s` }}
-              >
-                <div className="patch-module-head">
-                  <span className="patch-led" aria-hidden="true" />
-                  <span className="patch-iface">{v.iface}</span>
-                </div>
-                <h3 className="value-title">{v.title}</h3>
-                <p className="value-text">{v.text}</p>
-              </div>
+          <ul className="aci-list">
+            {values.map((v) => (
+              <li className="aci-item" key={v.iface} tabIndex={0}>
+                <span className="aci-item-iface">{v.iface}</span>
+                <h3 className="aci-item-title">{v.title}</h3>
+                <p className="aci-item-text">{v.text}</p>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
       </div>
     </div>

@@ -76,7 +76,7 @@ const Contact = () => {
       {/* Header Section */}
       <div className="contact-header">
         <h1>Get in Touch</h1>
-        <p>Looking for reliable AC rental services? Our team is here to help you find the right cooling solution with flexible rental plans and quick support.</p>
+        <p>Looking for reliable rack rental services? Get access to the equipment you need with flexible rental plans and prompt support.</p>
       </div>
 
       {/* Contact Methods */}

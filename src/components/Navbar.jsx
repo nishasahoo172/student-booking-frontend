@@ -37,47 +37,121 @@ export default function Navbar() {
       Cisco: {
         // "Technology Lab": [{ label: "CCNA", to: "/cisco/ccna" }],
 
-        CCIE: [
-          {
-            label: "EI",
-            children: [
-              { label: "Equipment", to: "/ccie-ei-equipment" },
-              { label: "EI v1.1 Topology", to: "/placeholder" },
-              { label: "Scheduler", to: "/ei-scheduler" },
-              { label: "Rack Access Guide", to: "/placeholder" },
-              // { label: "Buy Now", to: "/placeholder" },
-            ],
-          },
+       CCIE: [
+  {
+    label: "EI",
+    children: [
+      {
+        label: "Equipment",
+        to: "/ccie-ei-equipment",
+      },
 
-          {
-            label: "Security",
-            children: [
-              { label: "Equipment", to: "/ccie-security-equipment" },
-              { label: "SEC v6.1 Topology", to: "/placeholder" },
-              { label: "Scheduler", to: "/security-scheduler" },
-              { label: "Rack Access Guide", to: "/placeholder" },
-              // { label: "Buy Now", to: "/placeholder" },
-            ],
-          },
+      {
+        label: "EI v1.1 Topology",
+        to: "/guides/topology/ei/ccie-ei-v1.1-topology.png",
+      },
 
+      {
+        label: "Scheduler",
+        to: "/ei-scheduler",
+      },
+
+      {
+        label: "Rack Access Guide",
+        children: [
           {
-            label: "Data Center",
-            children: [
-              { label: "Equipment", to: "/ccie-data-center-equipment" },
-              { label: "Topology", to: "/placeholder" },
-              { label: "Scheduler", to: "/dc-scheduler" },
-              { label: "Rack Access Guide", to: "/placeholder" },
-              // { label: "Buy Now", to: "/placeholder" },
-            ],
+            label: "Rack 1 Guide",
+            to: "/guides/rack-access/ei/rack-1-access-guide.pdf",
           },
+          {
+            label: "Rack 2 Guide",
+            to: "/guides/rack-access/ei/rack-2-access-guide.pdf",
+          },
+          {
+            label: "Rack 3 Guide",
+            to: "/guides/rack-access/ei/rack-3-access-guide.pdf",
+          },
+        ],
+      },
+
+      // { label: "Buy Now", to: "/placeholder" },
+    ],
+  },
+
+        {
+  label: "Security",
+  children: [
+    {
+      label: "Equipment",
+      to: "/ccie-security-equipment",
+    },
+
+    {
+      label: "SEC v6.1 Topology",
+      to: "/guides/topology/security/ccie-security-v6.1-topology.jpeg",
+    },
+
+    {
+      label: "Scheduler",
+      to: "/security-scheduler",
+    },
+
+    {
+      label: "Rack Access Guide",
+      children: [
+        {
+          label: "Rack Details",
+          to: "/guides/rack-access/security/rack-details.pdf",
+        },
+        {
+          label: "How to Proceed for Lab",
+          to: "/guides/rack-access/security/how-to-proceed-lab.pdf",
+        },
+        {
+          label: "Rack 1, 2 & 3 Guide",
+          to: "/guides/rack-access/security/rack-1-2-3-guide.pdf",
+        },
+        {
+          label: "Rack 4 Guide",
+          to: "/guides/rack-access/security/rack-4-guide.pdf",
+        },
+        {
+          label: "Device IP & Credentials",
+          to: "/guides/rack-access/security/device-ip-credentials.pdf",
+        },
+      ],
+    },
+  ],
+},
+        {
+  label: "Data Center",
+  children: [
+    {
+      label: "Equipment",
+      to: "/ccie-data-center-equipment",
+    },
+    {
+      label: "Topology",
+      to: "/guides/topology/data-center/ccie-data-center-topology.jpg",
+    },
+    {
+      label: "Scheduler",
+      to: "/dc-scheduler",
+    },
+    {
+      label: "Rack Access Guide",
+      to: "/guides/rack-access/data-center/rack-access-guide.pdf",
+    },
+  ],
+},
 
           {
             label: "Wireless",
             children: [
               { label: "Equipment", to: "/ccie-wireless-equipment" },
-              { label: "Topology", to: "/placeholder" },
+              // { label: "Topology", to: "/placeholder" },
               { label: "Scheduler", to: "/wireless-scheduler" },
-              { label: "Rack Access Guide", to: "/placeholder" },
+              // { label: "Rack Access Guide", to: "/placeholder" },
               // { label: "Buy Now", to: "/placeholder" },
             ],
           },
@@ -89,11 +163,11 @@ export default function Navbar() {
           {
             label: "NSE8 / FCX",
             children: [
-             { label: "Equipment", to: "/fortinet-fcx8-equipment" },
+            //  { label: "Equipment", to: "/fortinet-fcx8-equipment" },
             
-              { label: "Topology", to: "/placeholder" },
+              // { label: "Topology", to: "/placeholder" },
               { label: "Scheduler", to: "/fcx-scheduler" },
-              { label: "Rack Access Guide", to: "/placeholder" },
+              // { label: "Rack Access Guide", to: "/placeholder" },
               // { label: "Buy Now", to: "/placeholder" },
             ],
           },
@@ -129,11 +203,23 @@ export default function Navbar() {
     setMLevel3(null);
   };
 
-  const go = (to) => {
-    closeAll();
-    navigate(to);
-  };
+const go = (to) => {
+  closeAll();
 
+  const isFile =
+    /\.(pdf|png|jpg|jpeg|webp)$/i.test(to);
+
+  if (isFile) {
+    window.open(
+      to,
+      "_blank",
+      "noopener,noreferrer"
+    );
+    return;
+  }
+
+  navigate(to);
+};
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -351,23 +437,64 @@ export default function Navbar() {
                 Resources
               </div>
 
-              {col3List.length === 0 ? (
-                <div className="megaHint">
-                  Select a track to view
-                  resources.
-                </div>
-              ) : (
-                col3List.map((x) => (
-                  <button
-                    key={x.label}
-                    className="megaItem"
-                    onClick={() => go(x.to)}
-                    type="button"
-                  >
-                    {x.label}
-                  </button>
-                ))
-              )}
+             {col3List.length === 0 ? (
+  <div className="megaHint">
+    Select a track to view resources.
+  </div>
+) : (
+  col3List.map((x) => (
+    <div key={x.label}>
+      <button
+        className="megaItem"
+        type="button"
+        onClick={() => {
+          if (x.children) {
+            return;
+          }
+
+          if (x.to?.endsWith(".pdf")) {
+            window.open(
+              x.to,
+              "_blank",
+              "noopener,noreferrer"
+            );
+            closeAll();
+            return;
+          }
+
+          go(x.to);
+        }}
+      >
+        {x.label}
+        {x.children ? (
+          <span className="right">›</span>
+        ) : null}
+      </button>
+
+      {x.children && (
+        <div style={{ paddingLeft: "18px" }}>
+          {x.children.map((child) => (
+            <button
+              key={child.label}
+              className="megaItem"
+              type="button"
+              onClick={() => {
+                window.open(
+                  child.to,
+                  "_blank",
+                  "noopener,noreferrer"
+                );
+                closeAll();
+              }}
+            >
+              {child.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  ))
+)}
             </div>
           </div>
         </div>
