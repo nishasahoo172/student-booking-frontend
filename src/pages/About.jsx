@@ -55,28 +55,17 @@ export default function About() {
           </div>
 
           <div className="aci-hero-panel">
-            <p className="aci-kicker">Rack Rental // Cisco ACI Fabric</p>
+            <p className="aci-kicker">Rack Rental // Advanced Networking Labs</p>
             <h1 className="aci-title">
-              Why Choose Our Cisco ACI Rack Rental Lab ?
+             Rack Rental Lab Access
             </h1>
             <p className="aci-body">
-              Get instant access to a real Cisco ACI environment without
-              investing in expensive enterprise hardware. Our Cisco ACI Rack
-              Rental platform is built for network engineers, CCIE
-              candidates, consultants, and IT professionals who want
-              practical experience with production-grade infrastructure.
-              Practice real deployment scenarios, validate configurations,
-              and strengthen your hands-on skills anytime from anywhere.
+             Get hands-on access to dedicated rack environments built for engineers, certification candidates, and IT professionals who want to practice real networking and security technologies.
+Our Rack Rental service gives you remote access to structured lab environments without the cost of building and maintaining your own infrastructure. You can practice configuration, implementation, troubleshooting, validation, and exam-focused scenarios across supported technologies.
+The platform is suitable for learners preparing for advanced certifications as well as working professionals who want more practical exposure to enterprise networking, data center, security, wireless, and Fortinet technologies.
             </p>
             <p className="aci-body">
-              Every reserved lab session provides a dedicated Cisco ACI
-              environment with secure remote access and preconfigured
-              enterprise hardware. Test new features, perform upgrades,
-              build VXLAN EVPN fabrics, troubleshoot complex issues, and
-              prepare confidently for certification exams. After every
-              session, the lab is automatically reset to a clean state,
-              ensuring a secure, isolated, and consistent learning
-              experience for every engineer.
+             Each booking provides access to the assigned rack environment for the reserved time slot. Users can work independently, follow the provided topology and access guide, and practice according to their course requirements. After the session, the environment can be reset so the next booking starts with a clean and consistent setup.
             </p>
           </div>
         </section>

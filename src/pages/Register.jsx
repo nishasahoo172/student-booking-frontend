@@ -75,7 +75,7 @@ export default function Register() {
         address: form.address.trim(),
         country: form.country,
         timezone: form.timeZone, 
-        courses:selectedCourses,// ✅ use timezone key (backend usually expects this)
+        // ✅ use timezone key (backend usually expects this)
       });
 
       setOk("Account created. Waiting for admin approval…");

@@ -103,7 +103,7 @@ const Contact = () => {
          className="method-btn"
          onClick={() =>
          window.open(
-          "https://wa.me/917019021129?text=Hi, I need assistance",
+          "https://wa.me/+917070369728?text=Hi, I need assistance",
           "_blank"
          )
          }
@@ -124,7 +124,7 @@ const Contact = () => {
             <div className="method-icon">📞</div>
             <h3>Phone Support</h3>
             <p>Describe the urgent tech issues and emergency calls.</p>
-            <button className="method-btn" onClick={() => window.location.href = 'tel:+1234567890'}>
+            <button className="method-btn" onClick={() => window.location.href = 'tel:+917070369728'}>
               Call us →
             </button>
           </div>
@@ -176,7 +176,7 @@ const Contact = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="john.doe@example.com"
+              placeholder="support@ccielabtraining.com"
             />
           </div>
 

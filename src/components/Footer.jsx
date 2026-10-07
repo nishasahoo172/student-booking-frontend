@@ -38,10 +38,10 @@ export default function Footer() {
                   <span>support@ccielabtraining.com</span>
                 </div>
                 <div className="contactItem">
-                  <span>+91 7760144441</span>
+                  <span>+917070369728</span>
                 </div>
               </div>
-              <h4 className="connectHeading">Connect with us</h4>
+              {/* <h4 className="connectHeading">Connect with us</h4>
               
                 <a href="https://wa.me/"
                 target="_blank"
@@ -49,7 +49,7 @@ export default function Footer() {
                 className="whatsappBtn"
               >
                 Whatsapp group
-              </a>
+              </a> */}
             </div>
 
           </div>

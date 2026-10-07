@@ -41,7 +41,7 @@ const tracks = [
           <div className="heroContent">
             <div className="heroTag">
               <span className="tagDot"></span>
-              <span>World's First CCIE Rack Release</span>
+              <span>Advanced CCIE Racks</span>
             </div>
             
             <h1 className="heroTitle">
@@ -115,7 +115,7 @@ const tracks = [
                 <div className="callIcon">📞</div>
                 <div className="callContent">
                   <div className="callLabel">24/7 Support</div>
-                  <div className="callNumber">+91-7777 078003</div>
+                  <div className="callNumber">+917070369728</div>
                 </div>
               </div>
             </div>
@@ -190,7 +190,7 @@ const tracks = [
             </div>
             <div className="statDivider"></div>
             <div className="statItem">
-              <div className="statNumber">100+</div>
+              <div className="statNumber">15+</div>
               <div className="statLabel">Active Lab Racks</div>
             </div>
             <div className="statDivider"></div>
@@ -410,8 +410,8 @@ const tracks = [
                   <img src="/assets/avatar1.png" alt="John" />
                 </div> */}
                 <div className="authorInfo">
-                  <h4>John Anderson</h4>
-                  <p>CCIE R&S #54321</p>
+                  <h4>Michael Johnson</h4>
+                  <p>NSE8/FCX</p>
                 </div>
               </div>
             </div>
@@ -427,8 +427,8 @@ const tracks = [
                   <img src="/assets/avatar2.png" alt="Sarah" />
                 </div> */}
                 <div className="authorInfo">
-                  <h4>Sarah Chen</h4>
-                  <p>CCIE Security #65432</p>
+                  <h4>Justine Njau</h4>
+                  <p>CCIE Security </p>
                 </div>
               </div>
             </div>
@@ -443,8 +443,8 @@ const tracks = [
                   <img src="/assets/avatar3.png" alt="Michael" />
                 </div> */}
                 <div className="authorInfo">
-                  <h4>Michael Park</h4>
-                  <p>CCIE Collaboration #76543</p>
+                  <h4> Vishal Thakare</h4>
+                  <p>CCIE Data Center </p>
                 </div>
               </div>
             </div>

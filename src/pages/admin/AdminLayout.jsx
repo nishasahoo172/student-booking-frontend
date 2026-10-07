@@ -1,4 +1,4 @@
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import "../../styles/adminLayout.css";
@@ -6,6 +6,7 @@ import "../../styles/adminLayout.css";
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   // ✅ Improved active logic
   const isActive = (path) => {
@@ -16,6 +17,12 @@ export default function AdminLayout() {
   };
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
   const closeSidebar = () => setSidebarOpen(false);
+
+  const handleLogout = () => {
+  localStorage.clear();
+  sessionStorage.clear();
+  navigate("/login", { replace: true });
+};
   return (
     <div className="admin-layout">
       {/* Mobile Overlay */}
@@ -108,6 +115,14 @@ export default function AdminLayout() {
               <div className="profile-role">Administrator</div>
             </div>
           </div>
+
+          <button
+    type="button"
+    className="admin-logout-btn"
+    onClick={handleLogout}
+  >
+    Logout
+  </button>
         </div>
       </aside>
       {/* Main Content */}
