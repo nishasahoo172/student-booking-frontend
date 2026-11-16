@@ -468,7 +468,7 @@ const payload = {
 
     <h1 className="scTitle">Scheduler</h1>
 
-      <div className="rackGuideTitleWrap">
+      {/* <div className="rackGuideTitleWrap">
         <h2 className="rackGuideTitle">
           Rack Access Guide
         </h2>
@@ -481,14 +481,17 @@ const payload = {
         >
           View Rack Access Instructions →
         </a>
-      </div>
+      </div> */}
 
-      <div className="scCrumb">
-        {isDataCenter && dcLab
-          ? `${courseMeta.title} / ${dcLab.label} / Calendar`
-          : `${courseMeta.title} / Calendar`}
-      </div>
+      {/* <h1 className="scTitle">Scheduler</h1> */}
 
+<div className="scCrumb">
+  {isDataCenter && dcLab
+    ? `${courseMeta.title} / ${dcLab.label} / Calendar`
+    : `${courseMeta.title} / Calendar`}
+</div>
+
+  
     </div>
 
   
