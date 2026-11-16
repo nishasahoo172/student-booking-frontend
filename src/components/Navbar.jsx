@@ -123,7 +123,8 @@ export default function Navbar() {
     },
   ],
 },
-        {
+
+{
   label: "Data Center",
   children: [
     {
@@ -135,8 +136,16 @@ export default function Navbar() {
       to: "/guides/topology/data-center/ccie-data-center-topology.jpg",
     },
     {
-      label: "Scheduler",
-      to: "/dc-scheduler",
+      label: "ACI Lab",
+      to: "/dc-scheduler/aci",
+    },
+    {
+      label: "NDFC Lab",
+      to: "/dc-scheduler/ndfc",
+    },
+    {
+      label: "UCS Lab",
+      to: "/dc-scheduler/ucs",
     },
     {
       label: "Rack Access Guide",

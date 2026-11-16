@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { COURSES } from "../data/courses";
 import ReservationModal from "../components/ReservationModal";
@@ -148,8 +148,30 @@ function endRowLine(dt) {
 }
  
 export default function SchedulerPage() {
-  const { slug } = useParams();
+const { slug, lab } = useParams();
   const location = useLocation();
+const navigate = useNavigate();
+
+  const DC_LABS = {
+  aci: {
+    label: "ACI",
+    rack: "1",
+  },
+  ndfc: {
+    label: "NDFC",
+    rack: "2",
+  },
+  ucs: {
+    label: "UCS",
+    rack: "3",
+  },
+};
+
+const isDataCenter = slug === "dc-scheduler";
+
+const dcLab = isDataCenter
+  ? DC_LABS[(lab || "").toLowerCase()]
+  : null;
  
   const courseMeta = useMemo(() => {
     const s = (slug || "").toLowerCase();
@@ -168,6 +190,11 @@ export default function SchedulerPage() {
   // ✅ selected rack (future-ready)
 const [selectedRack, setSelectedRack] = useState("1");
 const [availableRacks, setAvailableRacks] = useState(["1"]);
+
+const effectiveRack =
+  isDataCenter && dcLab
+    ? dcLab.rack
+    : selectedRack;
 
 const [focusDate, setFocusDate] = useState(() => new Date());
 const [view, setView] = useState("week");
@@ -217,7 +244,7 @@ const events = useMemo(() => {
       params: {
         vendor: courseMeta.vendor,
         course: courseMeta.slug,
-        rack: selectedRack,
+       rack: effectiveRack,
         start: start.toLocaleString("sv-SE").replace(" ", "T"),
         end: end.toLocaleString("sv-SE").replace(" ", "T"),
       },
@@ -256,7 +283,7 @@ const events = useMemo(() => {
     setBusyEvents([]);
   }
 
-}, [courseMeta, weekStart, focusDate, view, selectedRack]);
+}, [courseMeta, weekStart, focusDate, view, effectiveRack]);
 
 
   const loadUpcomingBooking = useCallback(async () => {
@@ -265,6 +292,9 @@ const { data } = await api.get("/bookings/upcoming", {
   params: {
     vendor: courseMeta.vendor,
     course: courseMeta.slug,
+    ...(isDataCenter && dcLab
+      ? { labTopic: dcLab.label }
+      : {}),
   },
 });
 
@@ -380,14 +410,25 @@ const clickCell = (day, hour) => {
     throw new Error("Slot start missing.");
   }
  
-  const payload = {
-  vendor: courseMeta.vendor,          // ✅ REQUIRED
-  course: courseMeta.slug,            // ✅ REQUIRED
-  rack: String(rack || selectedRack), // ✅ REQUIRED
-  // startISO: slotStart.toISOString(),  // ✅ REQUIRED
-  startISO: slotStart.toLocaleString("sv-SE").replace(" ", "T"),
-  // startISO: slotStart.toISOString(),
-  lengthMinutes: Number(lengthMinutes) // ✅ REQUIRED
+const payload = {
+  vendor: courseMeta.vendor,
+  course: courseMeta.slug,
+
+  rack: String(
+    isDataCenter && dcLab
+      ? dcLab.rack
+      : rack || selectedRack
+  ),
+
+  ...(isDataCenter && dcLab
+    ? { labTopic: dcLab.label }
+    : {}),
+
+  startISO: slotStart
+    .toLocaleString("sv-SE")
+    .replace(" ", "T"),
+
+  lengthMinutes: Number(lengthMinutes),
 };
  
   const data = await createBooking(payload);
@@ -420,30 +461,38 @@ const clickCell = (day, hour) => {
     [days.length]
   );
  
-    return (
-    <div className="scPage">
-      <div className="scHeader">
-        <h1 className="scTitle">Scheduler</h1>
-        <div className="rackGuideTitleWrap">
-        <h2 className="rackGuideTitle">
-       Rack Access Guide
-       </h2>
+  return (
+  <div className="scPage">
 
-          {/* <p className="rackGuideSub">
-           Reserve your CCIE Data Center rack access slot easily and get instant lab scheduling support.
-          </p> */}
-  
-     <a
-     href="YOUR_DRIVE_LINK_HERE"
-    target="_blank"
-    rel="noreferrer"
-    className="rackGuideLink"
-     >
-    View Rack Access Instructions →
-    </a>
-     </div>
-      <div className="scCrumb">{courseMeta.title} / Calendar</div>
+    <div className="scHeader">
+
+    <h1 className="scTitle">Scheduler</h1>
+
+      <div className="rackGuideTitleWrap">
+        <h2 className="rackGuideTitle">
+          Rack Access Guide
+        </h2>
+
+        <a
+          href="YOUR_DRIVE_LINK_HERE"
+          target="_blank"
+          rel="noreferrer"
+          className="rackGuideLink"
+        >
+          View Rack Access Instructions →
+        </a>
       </div>
+
+      <div className="scCrumb">
+        {isDataCenter && dcLab
+          ? `${courseMeta.title} / ${dcLab.label} / Calendar`
+          : `${courseMeta.title} / Calendar`}
+      </div>
+
+    </div>
+
+  
+
       <div className="scShell">
         <div className="scCard">
 
@@ -485,20 +534,45 @@ const clickCell = (day, hour) => {
                 : fmtRange(weekStart)}
             </div>
 
-          <div className="scRackSelector">
-              <label>Rack:</label>
 
-               <select
-        value={selectedRack}
-        onChange={(e) => setSelectedRack(e.target.value)}
-        >
-        {availableRacks.map((rack) => (
-         <option key={rack} value={rack}>
-            Rack {rack}
+         {isDataCenter && dcLab ? (
+  <div className="scRackSelector">
+    <label>Lab:</label>
+
+    <select
+      value={(lab || "").toLowerCase()}
+      onChange={(e) => {
+        const selectedLab = e.target.value;
+
+        navigate(
+          `/dc-scheduler/${selectedLab}/calendar`
+        );
+      }}
+    >
+      <option value="aci">ACI</option>
+      <option value="ndfc">NDFC</option>
+      <option value="ucs">UCS</option>
+    </select>
+  </div>
+) : (
+  <div className="scRackSelector">
+    <label>Rack:</label>
+
+    <select
+      value={selectedRack}
+      onChange={(e) =>
+        setSelectedRack(e.target.value)
+      }
+    >
+      {availableRacks.map((rack) => (
+        <option key={rack} value={rack}>
+          Rack {rack}
         </option>
-        ))}
-        </select>
-      </div>
+      ))}
+    </select>
+  </div>
+)}
+
 
             <div className="scViewToggle">
               <button className={view === "week" ? "active" : ""} onClick={() => setView("week")}>
@@ -595,8 +669,9 @@ const clickCell = (day, hour) => {
   startDate={slotStart}
   onSubmit={submitReservation}
   initialUser={user}
-  // allowedRacks={[selectedRack]}
   allowedRacks={availableRacks}
+  isDataCenter={isDataCenter}
+  labLabel={dcLab?.label || ""}
 />
  
 </div>

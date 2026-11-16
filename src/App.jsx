@@ -93,11 +93,40 @@ export default function App() {
       </Route>
 
       {/* ================= DYNAMIC ================= */}
-      <Route path="/:slug/calendar" element={<SchedulerAccessGuard><SchedulerPage /></SchedulerAccessGuard>} />
-      <Route path="/:slug" element={<SchedulerGate />} />
-      <Route path="/purchase-history" element={<PurchaseHistory />} />
-      <Route path="/credits" element={<CreditHistory />} />
-      <Route path="/buy-credits" element={<BuyCredits />} />
+
+{/* DATA CENTER LAB-SPECIFIC ROUTES */}
+<Route
+  path="/:slug/:lab/calendar"
+  element={
+    <SchedulerAccessGuard>
+      <SchedulerPage />
+    </SchedulerAccessGuard>
+  }
+/>
+
+<Route
+  path="/:slug/:lab"
+  element={<SchedulerGate />}
+/>
+
+{/* EXISTING GENERIC ROUTES - KEEP */}
+<Route
+  path="/:slug/calendar"
+  element={
+    <SchedulerAccessGuard>
+      <SchedulerPage />
+    </SchedulerAccessGuard>
+  }
+/>
+
+<Route
+  path="/:slug"
+  element={<SchedulerGate />}
+/>
+
+<Route path="/purchase-history" element={<PurchaseHistory />} />
+<Route path="/credits" element={<CreditHistory />} />
+<Route path="/buy-credits" element={<BuyCredits />} />
 
       {/* ================= FALLBACK ================= */}
       <Route path="*" element={<Placeholder />} />

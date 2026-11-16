@@ -22,7 +22,9 @@ export default function ReservationModal({
   startDate,
   onSubmit,
   initialUser,
-  allowedRacks = ["1"], // ✅ default (safe)
+  allowedRacks = ["1"],
+  isDataCenter = false,
+  labLabel = "",
 }) {
   const [form, setForm] = useState({
     rack: allowedRacks?.[0] ?? "1", // ✅ NEW
@@ -86,7 +88,9 @@ export default function ReservationModal({
     setErr("");
 
     if (!startDate) return setErr("Start time missing. Please select a slot again.");
-    if (!form.rack) return setErr("Rack is required."); // NEW
+    if (!isDataCenter && !form.rack) {
+    return setErr("Rack is required.");
+    }
     if (!form.fullName.trim()) return setErr("Full name is required.");
     if (!isEmail(form.email)) return setErr("Enter a valid email.");
     if (!isPhone(form.phone)) return setErr("Enter a valid phone number.");
@@ -122,18 +126,36 @@ export default function ReservationModal({
 
         <div className="rmBody">
           {/* Rack (REQUIRED) */}
-          <label className="rmLabel">Rack *</label>
-          <select
-            className="rmInput"
-            value={form.rack}
-            onChange={(e) => setForm((s) => ({ ...s, rack: e.target.value }))}
-          >
-            {allowedRacks.map((r) => (
-              <option key={r} value={r}>
-                Rack {r}
-              </option>
-            ))}
-          </select>
+         {isDataCenter ? (
+  <>
+    <label className="rmLabel">Lab</label>
+    <input
+      className="rmInput"
+      value={labLabel}
+      readOnly
+    />
+  </>
+) : (
+  <>
+    <label className="rmLabel">Rack *</label>
+    <select
+      className="rmInput"
+      value={form.rack}
+      onChange={(e) =>
+        setForm((s) => ({
+          ...s,
+          rack: e.target.value,
+        }))
+      }
+    >
+      {allowedRacks.map((r) => (
+        <option key={r} value={r}>
+          Rack {r}
+        </option>
+      ))}
+    </select>
+  </>
+)}
           <div className="rmRow2">
             <div>
               <label className="rmLabel">Start</label>

@@ -46,6 +46,17 @@ export default function Bookings() {
 //   });
 // };
 
+const getCourseTitle = (course) => {
+  const courseMap = {
+    "dc-scheduler": "CCIE Data Center",
+    "security-scheduler": "CCIE Security",
+    "ei-scheduler": "CCIE Enterprise Infrastructure",
+    "wireless-scheduler": "CCIE Wireless",
+  };
+
+  return courseMap[course] || course;
+};
+
   return (
     <div className="bookings-container">
       <div className="bookings-header">
@@ -66,8 +77,8 @@ export default function Bookings() {
           <table className="bookings-table">
             <thead>
               <tr>
-                <th>User</th>
                 <th>Course</th>
+                 <th>Lab / Rack</th>
                  <th>Rack</th>
                 <th>Start</th>
                 <th>End</th>
@@ -77,7 +88,7 @@ export default function Bookings() {
             <tbody>
               {rows.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="no-data">
+                  <td colSpan="6" className="no-data">
                     No bookings found
                   </td>
                 </tr>
@@ -93,13 +104,27 @@ export default function Bookings() {
                       </div>
                     </td>
                     <td data-label="Course">
-                      <span className="course-badge">{b.course}</span>
-                    </td>
-                    <td data-label="Rack">
-                   <span className="rack-badge">
-                   Rack {b.rack}
+                    <span className="course-badge">
+                    {getCourseTitle(b.course)}
                    </span>
-                   </td>
+                    </td>
+                 <td data-label="Lab / Rack">
+                {b.course === "dc-scheduler" ? (
+                  <div>
+              <div className="rack-badge">
+               Lab: {b.labTopic || "Data Center Lab"}
+             </div>
+
+             <div style={{ marginTop: "4px", fontSize: "12px", opacity: 0.7 }}>
+              Internal Rack: {b.rack}
+             </div>
+              </div>
+              ) : (
+             <span className="rack-badge">
+            Rack {b.rack}
+          </span>
+            )}
+            </td>
                     <td data-label="Start">
                       <div className="datetime-cell">
                         <span className="datetime-icon">📅</span>

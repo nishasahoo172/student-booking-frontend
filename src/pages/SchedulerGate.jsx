@@ -16,9 +16,30 @@ function isValidEmail(v = "") {
 }
 
 export default function SchedulerGate() {
-  const { slug } = useParams();
+const { slug, lab } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const DC_LABS = {
+  aci: {
+    label: "ACI",
+    rack: "1",
+  },
+  ndfc: {
+    label: "NDFC",
+    rack: "2",
+  },
+  ucs: {
+    label: "UCS",
+    rack: "3",
+  },
+};
+
+const isDataCenter = slug === "dc-scheduler";
+
+const dcLab = isDataCenter
+  ? DC_LABS[(lab || "").toLowerCase()]
+  : null;
 
   const [form, setForm] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -29,20 +50,36 @@ export default function SchedulerGate() {
   const [accessMessage, setAccessMessage] = useState("");
   const [checkingAccess, setCheckingAccess] = useState(true);  
 
-  const courseMeta = useMemo(() => {
-    const s = (slug || "").toLowerCase();
-    return COURSES.find((x) => (x.slug || "").toLowerCase() === s) || null;
-  }, [slug]);
+const courseMeta = useMemo(() => {
+  const s = (slug || "").toLowerCase();
 
-  const pageTitle = useMemo(() => {
-    if (!courseMeta) return "Scheduler";
-    return `${courseMeta.title} Scheduler`;
-  }, [courseMeta]);
+  return (
+    COURSES.find(
+      (x) => (x.slug || "").toLowerCase() === s
+    ) || null
+  );
+}, [slug]);
 
-  const breadcrumb = useMemo(() => {
-    if (!courseMeta) return "Login";
-    return `${courseMeta.title} / Login`;
-  }, [courseMeta]);
+
+const pageTitle = useMemo(() => {
+  if (!courseMeta) return "Scheduler";
+
+  if (isDataCenter && dcLab) {
+    return `${courseMeta.title} - ${dcLab.label} Scheduler`;
+  }
+
+  return `${courseMeta.title} Scheduler`;
+}, [courseMeta, isDataCenter, dcLab]);
+
+const breadcrumb = useMemo(() => {
+  if (!courseMeta) return "Login";
+
+  if (isDataCenter && dcLab) {
+    return `${courseMeta.title} / ${dcLab.label} / Login`;
+  }
+
+  return `${courseMeta.title} / Login`;
+}, [courseMeta, isDataCenter, dcLab]);
 
   const loginHeading = useMemo(() => {
     if (courseMeta?.loginTitle) return courseMeta.loginTitle;
@@ -129,7 +166,15 @@ export default function SchedulerGate() {
 
       if (res.data?.token) localStorage.setItem("token", res.data.token);
       if (res.data?.user) localStorage.setItem("user", JSON.stringify(res.data.user));
-      navigate(`/${slug}/calendar`, { replace: true });
+      if (isDataCenter && dcLab) {
+      navigate(`/${slug}/${lab}/calendar`, {
+      replace: true,
+      });
+      } else {
+      navigate(`/${slug}/calendar`, {
+      replace: true,
+      });
+      }
       } 
     
       
@@ -145,7 +190,7 @@ export default function SchedulerGate() {
       setLoading(false);
     }
   };
-  if (!courseMeta) {
+if (!courseMeta || (isDataCenter && !dcLab)) {
     return (
       <div className="sgPage">
         <div className="sgHeader">
